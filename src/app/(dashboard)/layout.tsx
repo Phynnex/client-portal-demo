@@ -8,7 +8,7 @@ import ClientContext from "@/app/context/ClientContext";
 
 import { PropsWithChildren } from "react";
 
-export default function DashboardLayout({ children }: PropsWithChildren<{}>) {
+export default function DashboardLayout({ children }: PropsWithChildren<object>) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Replace this with actual logic to get the client name
