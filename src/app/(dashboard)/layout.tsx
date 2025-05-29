@@ -6,7 +6,9 @@ import Navbar from "@/app/components/Navbar";
 import Sidebar from "@/app/components/Sidebar";
 import ClientContext from "@/app/context/ClientContext";
 
-export default function DashboardLayout({ children }) {
+import { PropsWithChildren } from "react";
+
+export default function DashboardLayout({ children }: PropsWithChildren<{}>) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Replace this with actual logic to get the client name
