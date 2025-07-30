@@ -9,6 +9,7 @@ import {
   Eye
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { Button } from '@/components/ui';
 
 // Dummy data for portfolio performance
 const portfolioData = [
@@ -209,10 +210,10 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-slate-900">Recent Transactions</h3>
-          <button className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 text-sm font-medium">
+          <Button variant="ghost" size="default" className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 text-sm font-medium">
             <Eye className="h-4 w-4" />
             <span>View All</span>
-          </button>
+          </Button>
         </div>
         <div className="space-y-4">
           {recentTransactions.map((transaction) => (

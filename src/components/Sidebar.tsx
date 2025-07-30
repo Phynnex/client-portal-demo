@@ -14,6 +14,7 @@ import {
   X
 } from 'lucide-react';
 import { useClient } from '@/context/ClientContext';
+import { Button } from '@/components/ui';
 
 // Navigation items
 const navItems = [
@@ -62,21 +63,24 @@ export default function Sidebar({
               </div>
             )}
             {isCollapsed && (
-              <button
+              <Button
                 onClick={() => setIsCollapsed(false)}
-                className="bg-gradient-to-r from-blue-600 to-teal-600 p-2 rounded-lg mx-auto hover:shadow-lg transition-all duration-200"
+                className="bg-gradient-to-r from-blue-600 to-teal-600 p-2 mx-auto hover:shadow-lg transition-all duration-200"
                 title="Expand Sidebar"
+                size="icon"
               >
                 <Waves className="h-6 w-6 text-white" />
-              </button>
+              </Button>
             )}
             {!isCollapsed && (
-              <button
+              <Button
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                variant="ghost"
+                size="icon"
+                className="p-1"
               >
                 <ChevronLeft className="h-4 w-4 text-slate-600" />
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -141,12 +145,14 @@ export default function Sidebar({
                     <p className="text-xs text-slate-600">Asset Management</p>
                   </div>
                 </div>
-                <button
+                <Button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-lg hover:bg-slate-100"
+                  variant="ghost"
+                  size="icon"
+                  className="p-2"
                 >
                   <X className="h-5 w-5 text-slate-600" />
-                </button>
+                </Button>
               </div>
             </div>
 
