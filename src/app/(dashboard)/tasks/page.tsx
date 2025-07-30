@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { 
   CheckCircle,
   Clock,
@@ -145,27 +145,7 @@ const notificationTypes = {
   error: { color: 'text-red-600', bg: 'bg-red-100' }
 };
 
- interface Task {
-    id: number;
-    title: string;
-    description: string;
-    priority: 'high' | 'medium' | 'low';
-    status: 'pending' | 'in-progress' | 'completed';
-    dueDate: string;
-    category: string;
-    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    createdAt: string;
-  }
-
-   interface Notification {
-    id: number;
-    title: string;
-    message: string;
-    type: 'success' | 'info' | 'warning' | 'error';
-    timestamp: string;
-    read: boolean;
-    icon: React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>;
-  }
+import type { Task, Notification } from '@/types';
 
 export default function TasksNotificationsPage() {
   const [activeTab, setActiveTab] = useState('tasks');

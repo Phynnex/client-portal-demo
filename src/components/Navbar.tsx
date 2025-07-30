@@ -1,20 +1,18 @@
 "use client";
 import React from 'react';
 import { Bell, User, Menu } from 'lucide-react';
-import { useClient } from '@/app/context/ClientContext';
+import { useClient } from '@/context/ClientContext';
 
 interface NavbarProps {
   setIsMobileMenuOpen: (open: boolean) => void;
-  clientName: string;
   pageTitle?: string;
 }
 
 export default function Navbar({ 
-  setIsMobileMenuOpen, 
-
-  pageTitle = "Dashboard" 
+  setIsMobileMenuOpen,
+  pageTitle = "Dashboard",
 }: NavbarProps) {
-     const { clientName } = useClient();
+  const { clientName } = useClient();
   return (
     <header className="bg-white shadow-sm border-b border-slate-200">
       <div className="px-4 sm:px-6 lg:px-8">

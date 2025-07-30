@@ -13,7 +13,7 @@ import {
   User,
   X
 } from 'lucide-react';
-import { useClient } from '@/app/context/ClientContext';
+import { useClient } from '@/context/ClientContext';
 
 // Navigation items
 const navItems = [
@@ -30,7 +30,6 @@ interface SidebarProps {
   setIsCollapsed: (collapsed: boolean) => void;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
-  clientName: string;
 }
 
 export default function Sidebar({
