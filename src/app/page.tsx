@@ -2,6 +2,7 @@
 "use client"
 import React, { useState } from 'react';
 import { Eye, EyeOff, Waves } from 'lucide-react';
+import { Button, Input, Card, CardContent } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 
 
@@ -57,7 +58,8 @@ export default function LoginPage() {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+        <Card className="p-8">
+          <CardContent className="p-0">
           <h2 className="text-2xl font-semibold text-slate-800 mb-6 text-center">
             Welcome Back
           </h2>
@@ -74,12 +76,11 @@ export default function LoginPage() {
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email Address
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
                 placeholder="Enter your email"
                 disabled={isLoading}
               />
@@ -91,23 +92,25 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative">
-                <input
+                <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-slate-50 focus:bg-white"
+                  className="pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
                 />
-                <button
+                <Button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -127,11 +130,11 @@ export default function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <button
+            <Button
               type="button"
               onClick={handleLogin}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-teal-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 transform hover:scale-[1.02] active:scale-[0.98]"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -141,7 +144,7 @@ export default function LoginPage() {
               ) : (
                 'Sign In'
               )}
-            </button>
+            </Button>
           </div>
 
           {/* Demo Credentials */}
@@ -150,7 +153,8 @@ export default function LoginPage() {
             <p className="text-sm text-blue-700">Email: demo@bluemarina.com</p>
             <p className="text-sm text-blue-700">Password: demo123</p>
           </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Footer */}
         <div className="text-center mt-8 text-sm text-slate-500">

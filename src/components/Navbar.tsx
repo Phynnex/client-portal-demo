@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { Bell, User, Menu } from 'lucide-react';
+import { Button } from '@/components/ui';
 import { useClient } from '@/context/ClientContext';
 
 interface NavbarProps {
@@ -18,12 +19,14 @@ export default function Navbar({
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-slate-100"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
             onClick={() => setIsMobileMenuOpen(true)}
           >
             <Menu className="h-5 w-5 text-slate-600" />
-          </button>
+          </Button>
 
           {/* Page Title */}
           <div className="flex-1 md:flex-none">
@@ -32,10 +35,10 @@ export default function Navbar({
 
           {/* Header Actions */}
           <div className="flex items-center space-x-4">
-            <button className="relative p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100">
+            <Button variant="ghost" size="icon" className="relative text-slate-600 hover:text-slate-900">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
-            </button>
+            </Button>
             <div className="hidden md:flex items-center space-x-2">
               <div className="bg-blue-100 p-2 rounded-full">
                 <User className="h-5 w-5 text-blue-600" />
