@@ -30,16 +30,24 @@ export default function LoginPage() {
       return;
     }
 
-    // Simulate API call
-    setTimeout(() => {
-      if (email === 'demo@bluemarina.com' && password === 'demo123') {
-        // Redirect to dashboard after successful login
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (res.ok) {
         router.push('/dashboard');
       } else {
-        setError('Invalid credentials. Try demo@bluemarina.com / demo123');
+        const data = await res.json();
+        setError(data.message || 'Login failed');
       }
+    } catch (err) {
+      setError('Network error');
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
