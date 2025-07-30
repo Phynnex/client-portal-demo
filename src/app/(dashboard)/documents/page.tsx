@@ -131,33 +131,47 @@ export default function DocumentsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const handleDownload = (document: DocumentType | null) => {
-    if (!document) return;
-    // Simulate file download
-    const link = window.document.createElement('a');
-    link.href = '#';
-    link.download = document.name;
-    window.document.body.appendChild(link);
-    link.click();
-    window.document.body.removeChild(link);
-    
-    // Show success message
-    alert(`Downloading ${document.name}...`);
+  const handleDownload = async (doc: DocumentType | null) => {
+    if (!doc) return;
+    try {
+      const res = await fetch(`/api/documents/${doc.id}`);
+      if (!res.ok) throw new Error('Failed to download');
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${doc.name}.${doc.type.toLowerCase()}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert('Download failed');
+    }
   };
 
-  const handleShare = (document: { id?: number; name: string; type?: string; category?: string; size?: string; date?: string; description: string; icon?: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>; color?: string; bgColor?: string; } | null) => {
-    // Simulate sharing functionality
-    if (!document) return;
-    if (navigator.share) {
-      navigator.share({
-        title: document.name,
-        text: document.description,
-        url: window.location.href
-      });
-    } else {
-      // Fallback to clipboard
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+  const handleShare = async (doc: DocumentType | null) => {
+    if (!doc) return;
+    try {
+      const res = await fetch(`/api/documents/${doc.id}`);
+      if (!res.ok) throw new Error('Failed to fetch');
+      const blob = await res.blob();
+      const file = new globalThis.File([blob], `${doc.name}.${doc.type.toLowerCase()}`, { type: blob.type });
+
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          title: doc.name,
+          text: doc.description,
+          files: [file]
+        });
+      } else {
+        const url = window.URL.createObjectURL(blob);
+        await navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      alert('Share failed');
     }
   };
 
@@ -421,11 +435,14 @@ export default function DocumentsPage() {
                       </div>
                     </div>
 
-                    {/* Simulated PDF Preview */}
-                    <div className="border border-gray-200 rounded-lg p-8 bg-white text-center">
-                      <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600 mb-4">Document preview would appear here</p>
-                      <p className="text-sm text-gray-500">This is a simulated preview for demonstration purposes</p>
+                    <div className="border border-gray-200 rounded-lg p-4 bg-white text-center">
+                      <object
+                        data={`/api/documents/${previewModal.document.id}`}
+                        type="application/pdf"
+                        className="w-full h-96"
+                      >
+                        <p className="text-gray-600">Preview unavailable.</p>
+                      </object>
                     </div>
 
                     <div className="flex space-x-3 pt-4">

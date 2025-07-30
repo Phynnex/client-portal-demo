@@ -171,7 +171,7 @@ export default function SecureMessagingPage() {
     setMessages(messagesData[selectedConversation.id] || []);
   }, [selectedConversation]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (newMessage.trim()) {
       const message = {
         id: messages.length + 1,
@@ -185,18 +185,29 @@ export default function SecureMessagingPage() {
       setMessages([...messages, message]);
       setNewMessage('');
 
-      // Simulate advisor response after 2 seconds
-      setTimeout(() => {
-        const response = {
-          id: messages.length + 2,
-          senderId: selectedConversation.id,
-          senderName: selectedConversation.name,
-          content: 'Thank you for your message. I\'ll get back to you shortly with more details.',
-          timestamp: new Date().toISOString(),
-          type: 'received'
-        };
-        setMessages(prev => [...prev, response]);
-      }, 2000);
+      try {
+        const res = await fetch('/api/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ conversationId: selectedConversation.id, message: newMessage })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.reply) {
+            const response = {
+              id: message.id + 1,
+              senderId: selectedConversation.id,
+              senderName: selectedConversation.name,
+              content: data.reply,
+              timestamp: new Date().toISOString(),
+              type: 'received'
+            } as Message;
+            setMessages(prev => [...prev, response]);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
