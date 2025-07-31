@@ -40,7 +40,7 @@ export default function LoginPage() {
 
       if (res.ok) {
         if (typeof window !== 'undefined') {
-          sessionStorage.setItem('clientName', 'John Anderson');
+          localStorage.setItem('clientName', 'John Anderson');
         }
         router.push('/dashboard');
       } else {

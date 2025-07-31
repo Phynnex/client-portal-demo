@@ -3,20 +3,21 @@ import React, { PropsWithChildren, useEffect, useState } from "react";
 import { Navbar, Sidebar } from "@/components";
 import { ClientProvider } from "@/context/ClientContext";
 import { useToggle } from "@/hooks/useToggle";
-import { getLoggedInUserName } from "@/lib/auth";
 
 export default function DashboardLayout({ children }: PropsWithChildren<object>) {
   const { value: isCollapsed, set: setIsCollapsed } = useToggle(false);
   const { value: isMobileMenuOpen, set: setIsMobileMenuOpen } = useToggle(false);
-  const [clientName, setClientName] = useState('');
+  const [storedName, setStoredName] = useState('');
 
   useEffect(() => {
-    const name = getLoggedInUserName();
-    if (name) setClientName(name);
+    if (typeof window !== "undefined") {
+      const name = localStorage.getItem("clientName") || "";
+      setStoredName(name);
+    }
   }, []);
 
   return (
-    <ClientProvider clientName={clientName}>
+    <ClientProvider clientName={storedName}>
       <div className="flex">
         <Sidebar
           isCollapsed={isCollapsed}

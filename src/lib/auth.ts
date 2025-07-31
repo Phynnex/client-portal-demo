@@ -1,5 +1,5 @@
 export function getLoggedInUserName(): string | null {
   if (typeof window === 'undefined') return null;
-  const name = sessionStorage.getItem('clientName');
+  const name = localStorage.getItem('clientName');
   return name;
 }
