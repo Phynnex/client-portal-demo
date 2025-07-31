@@ -152,6 +152,7 @@ export default function DocumentsPage() {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (err) {
+      console.error(err);
       alert('Download failed');
     }
   };
@@ -181,6 +182,7 @@ export default function DocumentsPage() {
         window.URL.revokeObjectURL(url);
       }
     } catch (err) {
+      console.error(err);
       alert('Share failed');
     }
   };
