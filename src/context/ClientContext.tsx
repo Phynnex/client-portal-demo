@@ -5,7 +5,7 @@ export interface ClientContextValue {
   clientName: string;
 }
 
-const ClientContext = createContext<ClientContextValue>({ clientName: 'John Anderson' });
+const ClientContext = createContext<ClientContextValue>({ clientName: '' });
 
 export const useClient = () => useContext(ClientContext);
 
