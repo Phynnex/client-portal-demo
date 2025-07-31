@@ -1,60 +1,59 @@
 # Client Portal Demo
 
-This repository contains a demo client portal built with **Next.js**. It showcases a simple authentication page and a dashboard with sections for accounts, documents, messages, reports and tasks. The project uses TypeScript, Tailwind CSS and Jest for unit testing.
+This project is a simple client dashboard built with **Next.js** and TypeScript. After logging in, users land on a dashboard with quick links to sections for accounts, documents, messages, reports and tasks. Styling is handled with Tailwind CSS and components are tested with Jest.
 
-## Directory structure
+## Folder Structure
 
 ```
 src/
   app/             # Next.js app router pages and layouts
-  components/      # Shared React components
+  components/      # Reusable React components
   context/         # React context for global state
   hooks/           # Custom hooks and their tests
-  lib/             # Helper utilities (e.g. auth, misc utils)
+  lib/             # Helper utilities (auth, etc.)
   types/           # Shared TypeScript types
 public/            # Static assets served by Next.js
 ```
 
-## Getting started
+## Setup
 
-1. Install dependencies with `npm install`.
-2. Run the development server:
+Install dependencies and start the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open <http://localhost:3000> in your browser to view the app.
-
-### Running tests
-
-Unit tests are executed with Jest:
-
-```bash
-npm test
-```
-
 ### Linting
-
-ESLint is configured with Next.js rules:
 
 ```bash
 npm run lint
 ```
 
-### Building for production
+### Running Tests
 
-Create an optimized build and start the server:
+```bash
+npm test
+```
+
+### Production Build
+
+Create the optimized build output:
 
 ```bash
 npm run build
+```
+
+## Deployment
+
+After running `npm run build`, start the server with:
+
+```bash
 npm start
 ```
 
-## Learn more
-
-For more details about Next.js see the [Next.js documentation](https://nextjs.org/docs).
+The application can also be deployed to any platform that supports Node.js, such as Vercel or a traditional hosting provider.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+Released under the [MIT License](LICENSE).
