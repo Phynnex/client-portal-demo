@@ -18,9 +18,9 @@ import {
   Shield,
   TrendingUp,
   Users,
-  LucideProps
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
+import type { DocumentType } from '@/types';
 
 // Mock documents data
 const documentsData = [
@@ -100,19 +100,6 @@ const documentsData = [
 
 const categories = ['All', 'Reports', 'Contracts', 'Invoices'];
 
-type DocumentType = {
-  id: number;
-  name: string;
-  type: string;
-  category: string;
-  size: string;
-  date: string;
-  description: string;
-  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
-  color: string;
-  bgColor: string;
-};
-
 type PreviewModalState = {
   isOpen: boolean;
   document: DocumentType | null;
@@ -188,7 +175,8 @@ export default function DocumentsPage() {
     }
   };
 
-  const handlePreview = (document: { id: number; name: string; type: string; category: string; size: string; date: string; description: string; icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>; color: string; bgColor: string; }) => {
+  const handlePreview = (document: DocumentType | null) => {
+    if (!document) return;
     setPreviewModal({ isOpen: true, document });
   };
 
