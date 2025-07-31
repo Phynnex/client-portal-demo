@@ -33,7 +33,19 @@ npm run lint
 npm test
 ```
 
+
 ### Build
+=======
+### Shadcn UI Library
+
+This project uses wrapper components based on the **shadcn/ui** library. If the
+dependencies were not installed automatically, run:
+
+```bash
+npm install @shadcn/ui
+```
+
+
 
 ```bash
 npm run build

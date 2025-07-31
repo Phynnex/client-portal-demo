@@ -35,7 +35,11 @@ import {
   ComposedChart,
   Legend
 } from 'recharts';
-import { ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import {
+  ValueType,
+  NameType,
+  TooltipProps
+} from 'recharts/types/component/DefaultTooltipContent';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -163,9 +167,12 @@ export default function ReportsAnalyticsPage() {
 
   const handleExportData = () => {
     if (!currentData) return;
+
     const headers = Object.keys(currentData[0]);
+
     const rows = currentData.map(row =>
       headers.map(h => String((row as Record<string, unknown>)[h] ?? '')).join(',')
+
     );
     const csv = [headers.join(','), ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -270,7 +277,7 @@ export default function ReportsAnalyticsPage() {
             </div>
             <Select
               value={selectedPortfolio}
-              onChange={(e) => setSelectedPortfolio(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPortfolio(e.target.value)}
               className="px-3 py-2"
             >
               <option value="all">All Portfolios</option>
@@ -336,16 +343,16 @@ export default function ReportsAnalyticsPage() {
                   fontSize={12}
                   tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
                 />
-                <Tooltip
-                  formatter={(value, name) => [
-                    formatCurrency(value),
-                    name === 'portfolio' ? 'Portfolio' : 'Benchmark'
-                  ]}
-                  labelStyle={{ color: '#1e293b' }}
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '8px'
+                  <Tooltip
+                    formatter={(value: ValueType, name: NameType) => [
+                      formatCurrency(value),
+                      name === 'portfolio' ? 'Portfolio' : 'Benchmark'
+                    ]}
+                    labelStyle={{ color: '#1e293b' }}
+                    contentStyle={{
+                      backgroundColor: 'white',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px'
                   }}
                 />
                 <Line
@@ -374,12 +381,12 @@ export default function ReportsAnalyticsPage() {
                   fontSize={12}
                   tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
                 />
-                <Tooltip
-                  formatter={(value, name) => [
-                    formatCurrency(value),
-                    name === 'portfolio' ? 'Portfolio' : 'Benchmark'
-                  ]}
-                />
+                  <Tooltip
+                    formatter={(value: ValueType, name: NameType) => [
+                      formatCurrency(value),
+                      name === 'portfolio' ? 'Portfolio' : 'Benchmark'
+                    ]}
+                  />
                 <Area
                   type="monotone"
                   dataKey="portfolio"
@@ -424,7 +431,11 @@ export default function ReportsAnalyticsPage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value, name, props) => [
+                  formatter={(
+                    value: ValueType,
+                    name: NameType,
+                    props: TooltipProps<ValueType, NameType>
+                  ) => [
                     `${value}% (${formatCurrency(props.payload.amount)})`,
                     props.payload.name
                   ]}
@@ -466,12 +477,12 @@ export default function ReportsAnalyticsPage() {
                   fontSize={11}
                   width={80}
                 />
-                <Tooltip
-                  formatter={(value, name) => [
-                    name === 'allocation' ? `${value}%` : `${formatPercent(value)}`,
-                    name === 'allocation' ? 'Allocation' : 'Performance'
-                  ]}
-                />
+                  <Tooltip
+                    formatter={(value: ValueType, name: NameType) => [
+                      name === 'allocation' ? `${value}%` : `${formatPercent(value)}`,
+                      name === 'allocation' ? 'Allocation' : 'Performance'
+                    ]}
+                  />
                 <Bar dataKey="allocation" fill="#0ea5e9" />
                 <Bar dataKey="performance" fill="#14b8a6" />
               </BarChart>
@@ -491,7 +502,9 @@ export default function ReportsAnalyticsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
                 <YAxis stroke="#64748b" fontSize={12} />
-                <Tooltip formatter={(value) => [formatCurrency(value)]} />
+                <Tooltip
+                  formatter={(value: ValueType) => [formatCurrency(value)]}
+                />
                 <Legend />
                 <Bar dataKey="dividends" stackId="a" fill="#0ea5e9" name="Dividends" />
                 <Bar dataKey="interest" stackId="a" fill="#14b8a6" name="Interest" />

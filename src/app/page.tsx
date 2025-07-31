@@ -38,13 +38,13 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password })
       });
 
+      const data = await res.json();
       if (res.ok) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('clientName', 'John Anderson');
+        if (typeof window !== 'undefined' && data.name) {
+          localStorage.setItem('clientName', data.name);
         }
         router.push('/dashboard');
       } else {
-        const data = await res.json();
         setError(data.message || 'Login failed');
       }
     } catch (err) {
@@ -92,7 +92,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 disabled={isLoading}
               />
@@ -108,7 +108,7 @@ export default function LoginPage() {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                   className="pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
