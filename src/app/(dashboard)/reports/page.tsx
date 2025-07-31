@@ -36,7 +36,8 @@ import {
   Legend
 } from 'recharts';
 import { ValueType } from 'recharts/types/component/DefaultTooltipContent';
-import { exportElementAsPDF, exportElementAsPNG, exportToCSV } from '@/lib/export';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 // Mock data for different time periods
 const performanceData = {
@@ -134,21 +135,46 @@ export default function ReportsAnalyticsPage() {
     return `${num >= 0 ? '+' : ''}${num.toFixed(1)}%`;
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     if (!reportRef.current) return;
-    exportElementAsPDF(reportRef.current);
+    const canvas = await html2canvas(reportRef.current);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'px',
+      format: [canvas.width, canvas.height]
+    });
+    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    pdf.save('report.pdf');
     setShowExportMenu(false);
   };
 
-  const handleExportImage = () => {
+  const handleExportImage = async () => {
     if (!reportRef.current) return;
-    exportElementAsPNG(reportRef.current, 'report.png');
+    const canvas = await html2canvas(reportRef.current);
+    const url = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'report.png';
+    link.click();
+    URL.revokeObjectURL(url);
     setShowExportMenu(false);
   };
 
   const handleExportData = () => {
     if (!currentData) return;
-    exportToCSV(currentData, 'data.csv');
+    const headers = Object.keys(currentData[0]);
+    const rows = currentData.map(row =>
+      headers.map(h => String((row as any)[h] ?? '')).join(',')
+    );
+    const csv = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'data.csv';
+    link.click();
+    URL.revokeObjectURL(url);
     setShowExportMenu(false);
   };
 
