@@ -8,7 +8,7 @@ import { getLoggedInUserName } from "@/lib/auth";
 export default function DashboardLayout({ children }: PropsWithChildren<object>) {
   const { value: isCollapsed, set: setIsCollapsed } = useToggle(false);
   const { value: isMobileMenuOpen, set: setIsMobileMenuOpen } = useToggle(false);
-  const [clientName, setClientName] = useState("John Anderson");
+  const [clientName, setClientName] = useState('');
 
   useEffect(() => {
     const name = getLoggedInUserName();
