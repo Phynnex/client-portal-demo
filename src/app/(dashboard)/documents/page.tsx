@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react';
-import { 
-  FileText, 
-  Download, 
-  Share2, 
+import {
+  FileText,
+  Download,
+  Share2,
   Eye,
   X,
   Calendar,
@@ -20,6 +20,7 @@ import {
   Users,
   LucideProps
 } from 'lucide-react';
+import { Button, Input, Select } from '@/components/ui';
 
 // Mock documents data
 const documentsData = [
@@ -218,12 +219,12 @@ export default function DocumentsPage() {
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2"
               />
             </div>
 
@@ -231,35 +232,37 @@ export default function DocumentsPage() {
               {/* Category Filter */}
               <div className="flex items-center gap-2">
                 <Filter className="h-5 w-5 text-slate-500" />
-                <select
+                <Select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="px-3 py-2"
                 >
                   {categories.map(category => (
                     <option key={category} value={category}>{category}</option>
                   ))}
-                </select>
+                </Select>
               </div>
 
               {/* View Mode Toggle */}
               <div className="flex items-center bg-slate-100 rounded-lg p-1">
-                <button
+                <Button
                   onClick={() => setViewMode('grid')}
+                  variant="ghost"
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500'
                   }`}
                 >
                   <Grid className="h-4 w-4" />
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => setViewMode('list')}
+                  variant="ghost"
                   className={`p-2 rounded-md transition-colors ${
                     viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500'
                   }`}
                 >
                   <List className="h-4 w-4" />
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -277,27 +280,30 @@ export default function DocumentsPage() {
                       <Icon className={`h-6 w-6 ${document.color}`} />
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button
+                      <Button
                         onClick={() => handlePreview(document)}
-                        className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        variant="ghost"
+                        className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50"
                         title="Preview"
                       >
                         <Eye className="h-4 w-4" />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         onClick={() => handleDownload(document)}
-                        className="p-2 text-slate-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        variant="ghost"
+                        className="p-2 text-slate-500 hover:text-green-600 hover:bg-green-50"
                         title="Download"
                       >
                         <Download className="h-4 w-4" />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         onClick={() => handleShare(document)}
-                        className="p-2 text-slate-500 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                        variant="ghost"
+                        className="p-2 text-slate-500 hover:text-purple-600 hover:bg-purple-50"
                         title="Share"
                       >
                         <Share2 className="h-4 w-4" />
-                      </button>
+                      </Button>
                     </div>
                   </div>
                   
@@ -361,27 +367,30 @@ export default function DocumentsPage() {
                         <td className="py-4 px-6 text-slate-600">{document.size}</td>
                         <td className="py-4 px-6">
                           <div className="flex items-center justify-end space-x-2">
-                            <button
+                            <Button
                               onClick={() => handlePreview(document)}
-                              className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              variant="ghost"
+                              className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50"
                               title="Preview"
                             >
                               <Eye className="h-4 w-4" />
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                               onClick={() => handleDownload(document)}
-                              className="p-2 text-slate-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                              variant="ghost"
+                              className="p-2 text-slate-500 hover:text-green-600 hover:bg-green-50"
                               title="Download"
                             >
                               <Download className="h-4 w-4" />
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                               onClick={() => handleShare(document)}
-                              className="p-2 text-slate-500 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                              variant="ghost"
+                              className="p-2 text-slate-500 hover:text-purple-600 hover:bg-purple-50"
                               title="Share"
                             >
                               <Share2 className="h-4 w-4" />
-                            </button>
+                            </Button>
                           </div>
                         </td>
                       </tr>
@@ -413,12 +422,13 @@ export default function DocumentsPage() {
               <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900">Document Preview</h3>
-                  <button
+                  <Button
                     onClick={closePreview}
+                    variant="ghost"
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <X className="h-5 w-5 text-gray-500" />
-                  </button>
+                  </Button>
                 </div>
 
                 {previewModal.document && (
@@ -458,20 +468,20 @@ export default function DocumentsPage() {
                     </div>
 
                     <div className="flex space-x-3 pt-4">
-                      <button
+                      <Button
                         onClick={() => handleDownload(previewModal.document)}
                         className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
                       >
                         <Download className="h-4 w-4" />
                         <span>Download</span>
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         onClick={() => handleShare(previewModal.document)}
                         className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center space-x-2"
                       >
                         <Share2 className="h-4 w-4" />
                         <span>Share</span>
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 )}

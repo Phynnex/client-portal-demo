@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { 
+import {
   CheckCircle,
   Clock,
   AlertCircle,
@@ -17,6 +17,7 @@ import {
   MoreVertical,
   Check,
 } from 'lucide-react';
+import { Button, Input, Select } from '@/components/ui';
 
 // Mock tasks data
 const tasksData = [
@@ -239,19 +240,21 @@ export default function TasksNotificationsPage() {
               <p className="text-sm text-blue-700">Stay updated with your latest account activities</p>
             </div>
           </div>
-          <button
+          <Button
             onClick={() => setShowNotificationBanner(false)}
+            variant="ghost"
             className="text-blue-500 hover:text-blue-700"
           >
             <X className="h-5 w-5" />
-          </button>
+          </Button>
         </div>
       )}
 
       {/* Tabs */}
       <div className="flex space-x-1 bg-slate-100 rounded-lg p-1 mb-6 w-fit">
-        <button
+        <Button
           onClick={() => setActiveTab('tasks')}
+          variant="ghost"
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
             activeTab === 'tasks'
               ? 'bg-white text-slate-900 shadow-sm'
@@ -264,9 +267,10 @@ export default function TasksNotificationsPage() {
               {taskCounts.pending}
             </span>
           )}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => setActiveTab('notifications')}
+          variant="ghost"
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
             activeTab === 'notifications'
               ? 'bg-white text-slate-900 shadow-sm'
@@ -279,7 +283,7 @@ export default function TasksNotificationsPage() {
               {unreadCount}
             </span>
           )}
-        </button>
+        </Button>
       </div>
 
       {/* Tasks Tab */}
@@ -322,38 +326,38 @@ export default function TasksNotificationsPage() {
               {/* Search */}
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
-                <input
+                <Input
                   type="text"
                   placeholder="Search tasks..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  className="w-full pl-10 pr-4 py-2 text-sm"
                 />
               </div>
 
               {/* Filters */}
               <div className="flex items-center space-x-4">
-                <select
+                <Select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="px-3 py-2 text-sm"
                 >
                   <option value="all">All Status</option>
                   <option value="pending">Pending</option>
                   <option value="in-progress">In Progress</option>
                   <option value="completed">Completed</option>
-                </select>
+                </Select>
 
-                <select
+                <Select
                   value={filterPriority}
                   onChange={(e) => setFilterPriority(e.target.value)}
-                  className="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="px-3 py-2 text-sm"
                 >
                   <option value="all">All Priority</option>
                   <option value="high">High</option>
                   <option value="medium">Medium</option>
                   <option value="low">Low</option>
-                </select>
+                </Select>
               </div>
             </div>
           </div>
@@ -397,20 +401,20 @@ export default function TasksNotificationsPage() {
 
                     <div className="flex items-center space-x-2 ml-4">
                       {task.status === 'pending' && (
-                        <button
+                        <Button
                           onClick={() => handleTaskStatusUpdate(task.id, 'in-progress')}
                           className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm"
                         >
                           Start
-                        </button>
+                        </Button>
                       )}
                       {task.status === 'in-progress' && (
-                        <button
+                        <Button
                           onClick={() => handleTaskStatusUpdate(task.id, 'completed')}
                           className="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm"
                         >
                           Complete
-                        </button>
+                        </Button>
                       )}
                       {task.status === 'completed' && (
                         <div className="flex items-center space-x-1 text-green-600">
@@ -418,9 +422,9 @@ export default function TasksNotificationsPage() {
                           <span className="text-sm font-medium">Done</span>
                         </div>
                       )}
-                      <button className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+                      <Button variant="ghost" className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
                         <MoreVertical className="h-4 w-4" />
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -452,12 +456,13 @@ export default function TasksNotificationsPage() {
               )}
             </div>
             {unreadCount > 0 && (
-              <button
+              <Button
                 onClick={handleMarkAllAsRead}
+                variant="ghost"
                 className="text-blue-600 hover:text-blue-800 text-sm font-medium"
               >
                 Mark all as read
-              </button>
+              </Button>
             )}
           </div>
 
