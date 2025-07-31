@@ -270,7 +270,7 @@ export default function ReportsAnalyticsPage() {
             </div>
             <Select
               value={selectedPortfolio}
-              onChange={(e) => setSelectedPortfolio(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPortfolio(e.target.value)}
               className="px-3 py-2"
             >
               <option value="all">All Portfolios</option>

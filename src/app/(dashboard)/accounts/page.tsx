@@ -218,7 +218,7 @@ export default function AccountAggregationPage() {
               type="text"
               placeholder="Search accounts..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2"
             />
           </div>
@@ -228,7 +228,7 @@ export default function AccountAggregationPage() {
             <Filter className="h-5 w-5 text-slate-500" />
             <Select
               value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedType(e.target.value)}
               className="px-3 py-2"
             >
               {accountTypes.map(type => (

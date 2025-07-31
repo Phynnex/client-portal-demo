@@ -211,7 +211,7 @@ export default function DocumentsPage() {
                 type="text"
                 placeholder="Search documents..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2"
               />
             </div>
@@ -222,7 +222,7 @@ export default function DocumentsPage() {
                 <Filter className="h-5 w-5 text-slate-500" />
                 <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedCategory(e.target.value)}
                   className="px-3 py-2"
                 >
                   {categories.map(category => (
