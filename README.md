@@ -1,39 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Client Portal Demo
 
-## Getting Started
+This repository contains a demo client portal built with **Next.js**. It showcases a simple authentication page and a dashboard with sections for accounts, documents, messages, reports and tasks. The project uses TypeScript, Tailwind CSS and Jest for unit testing.
 
-First, run the development server:
+## Directory structure
+
+```
+src/
+  app/             # Next.js app router pages and layouts
+  components/      # Shared React components
+  context/         # React context for global state
+  hooks/           # Custom hooks and their tests
+  lib/             # Helper utilities (e.g. auth, misc utils)
+  types/           # Shared TypeScript types
+public/            # Static assets served by Next.js
+```
+
+## Getting started
+
+1. Install dependencies with `npm install`.
+2. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> in your browser to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Unit tests are executed with Jest:
 
-## Learn More
+```bash
+npm test
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ESLint is configured with Next.js rules:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint
+```
 
-## Deploy on Vercel
+### Building for production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create an optimized build and start the server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm start
+```
+
+## Learn more
+
+For more details about Next.js see the [Next.js documentation](https://nextjs.org/docs).
 
 ## License
 

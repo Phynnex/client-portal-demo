@@ -1,6 +1,10 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import {
+
+
+import { useClient } from '@/context/ClientContext';
+import { 
+
   Send,
   Search,
   MoreVertical,
@@ -89,7 +93,7 @@ const messagesData: { [key: string]: Message[] } = {
     {
       id: 2,
       senderId: 'user',
-      senderName: 'John Anderson',
+      senderName: '',
       content: 'Hello Sarah! Yes, thank you. How are things on your end?',
       timestamp: '2025-05-29T14:05:00Z',
       type: 'sent'
@@ -105,7 +109,7 @@ const messagesData: { [key: string]: Message[] } = {
     {
       id: 4,
       senderId: 'user',
-      senderName: 'John Anderson',
+      senderName: '',
       content: 'That sounds wonderful! Can you share the details?',
       timestamp: '2025-05-29T14:15:00Z',
       type: 'sent'
@@ -131,7 +135,7 @@ const messagesData: { [key: string]: Message[] } = {
     {
       id: 2,
       senderId: 'user',
-      senderName: 'John Anderson',
+      senderName: '',
       content: 'Hi Mike! I\'m interested to hear about them.',
       timestamp: '2025-05-29T09:45:00Z',
       type: 'sent'
@@ -148,6 +152,7 @@ const messagesData: { [key: string]: Message[] } = {
 };
 
 export default function SecureMessagingPage() {
+  const { clientName } = useClient();
   const [selectedConversation, setSelectedConversation] = useState(conversationsData[0]);
   const [messages, setMessages] = useState(messagesData[conversationsData[0].id] || []);
   const [newMessage, setNewMessage] = useState('');
@@ -161,23 +166,22 @@ export default function SecureMessagingPage() {
   }
 
   useEffect(() => {
-    setMessages(messagesData[String(selectedConversation.id)] || []);
-  }, [selectedConversation]);
+    const convMsgs = (messagesData[String(selectedConversation.id)] || []).map(m =>
+      m.senderId === 'user' ? { ...m, senderName: clientName } : m
+    );
+    setMessages(convMsgs);
+  }, [selectedConversation, clientName]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  useEffect(() => {
-    setMessages(messagesData[selectedConversation.id] || []);
-  }, [selectedConversation]);
 
   const handleSendMessage = async () => {
     if (newMessage.trim()) {
       const message = {
         id: messages.length + 1,
         senderId: 'user',
-        senderName: 'John Anderson',
+        senderName: clientName,
         content: newMessage,
         timestamp: new Date().toISOString(),
         type: 'sent'

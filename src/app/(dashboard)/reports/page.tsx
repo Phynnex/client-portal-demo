@@ -36,6 +36,7 @@ import {
   Legend
 } from 'recharts';
 import { ValueType } from 'recharts/types/component/DefaultTooltipContent';
+import { exportElementAsPDF, exportElementAsPNG, exportToCSV } from '@/lib/export';
 
 // Mock data for different time periods
 const performanceData = {
@@ -135,51 +136,19 @@ export default function ReportsAnalyticsPage() {
 
   const handleExportPDF = () => {
     if (!reportRef.current) return;
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) return;
-    printWindow.document.write(`<html><body>${reportRef.current.innerHTML}</body></html>`);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
+    exportElementAsPDF(reportRef.current);
     setShowExportMenu(false);
   };
 
   const handleExportImage = () => {
     if (!reportRef.current) return;
-    const svg = reportRef.current.querySelector('svg');
-    if (!svg) return;
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement('canvas');
-    const bbox = svg.getBoundingClientRect();
-    canvas.width = bbox.width;
-    canvas.height = bbox.height;
-    const ctx = canvas.getContext('2d');
-    const img = new window.Image();
-    img.onload = () => {
-      ctx?.drawImage(img, 0, 0);
-      const url = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'report.png';
-      link.click();
-    };
-    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    exportElementAsPNG(reportRef.current, 'report.png');
     setShowExportMenu(false);
   };
 
   const handleExportData = () => {
     if (!currentData) return;
-    const headers = Object.keys(currentData[0]);
-    const rows = currentData.map(row => headers.map(h => row[h as keyof typeof row]).join(','));
-    const csv = [headers.join(','), ...rows].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'data.csv';
-    link.click();
-    window.URL.revokeObjectURL(url);
+    exportToCSV(currentData, 'data.csv');
     setShowExportMenu(false);
   };
 

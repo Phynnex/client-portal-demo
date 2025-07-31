@@ -39,12 +39,16 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('clientName', 'John Anderson');
+        }
         router.push('/dashboard');
       } else {
         const data = await res.json();
         setError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.error(err);
       setError('Network error');
     } finally {
       setIsLoading(false);

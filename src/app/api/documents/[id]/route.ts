@@ -19,6 +19,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       headers: { 'Content-Type': contentType }
     });
   } catch (error) {
+    console.error(error);
     return new NextResponse('File not found', { status: 404 });
   }
 }
