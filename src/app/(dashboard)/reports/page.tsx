@@ -165,7 +165,7 @@ export default function ReportsAnalyticsPage() {
     if (!currentData) return;
     const headers = Object.keys(currentData[0]);
     const rows = currentData.map(row =>
-      headers.map(h => String((row as any)[h] ?? '')).join(',')
+      headers.map(h => String((row as Record<string, unknown>)[h] ?? '')).join(',')
     );
     const csv = [headers.join(','), ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
