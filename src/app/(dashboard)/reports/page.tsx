@@ -11,7 +11,7 @@ import {
 
 
   FileText,
-  Image,
+  Image as ImageIcon,
 
 
   ChevronDown
@@ -191,7 +191,7 @@ export default function ReportsAnalyticsPage() {
                     variant="ghost"
                     className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
                   >
-                    <Image className="h-4 w-4 text-green-500" />
+                    <ImageIcon className="h-4 w-4 text-green-500" />
                     <span>Export as Image</span>
                   </Button>
                   <Button
