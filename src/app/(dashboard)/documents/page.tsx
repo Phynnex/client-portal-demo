@@ -117,6 +117,8 @@ type PreviewModalState = {
   document: DocumentType | null;
 };
 
+const ENABLE_DOC_ACTIONS = process.env.NEXT_PUBLIC_ENABLE_DOCS_ACTIONS === 'true';
+
 export default function DocumentsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
@@ -133,6 +135,10 @@ export default function DocumentsPage() {
 
   const handleDownload = async (doc: DocumentType | null) => {
     if (!doc) return;
+    if (!ENABLE_DOC_ACTIONS) {
+      alert('Download feature disabled');
+      return;
+    }
     try {
       const res = await fetch(`/api/documents/${doc.id}`);
       if (!res.ok) throw new Error('Failed to download');
@@ -152,6 +158,10 @@ export default function DocumentsPage() {
 
   const handleShare = async (doc: DocumentType | null) => {
     if (!doc) return;
+    if (!ENABLE_DOC_ACTIONS) {
+      alert('Share feature disabled');
+      return;
+    }
     try {
       const res = await fetch(`/api/documents/${doc.id}`);
       if (!res.ok) throw new Error('Failed to fetch');
