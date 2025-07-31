@@ -38,13 +38,13 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password })
       });
 
+      const data = await res.json();
       if (res.ok) {
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('clientName', 'John Anderson');
+        if (typeof window !== 'undefined' && data.name) {
+          localStorage.setItem('clientName', data.name);
         }
         router.push('/dashboard');
       } else {
-        const data = await res.json();
         setError(data.message || 'Login failed');
       }
     } catch (err) {
