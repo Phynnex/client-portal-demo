@@ -45,6 +45,7 @@ export default function LoginPage() {
         setError(data.message || 'Login failed');
       }
     } catch (err) {
+      console.error(err);
       setError('Network error');
     } finally {
       setIsLoading(false);
