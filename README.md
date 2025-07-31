@@ -1,41 +1,41 @@
 # Client Portal Demo
 
-This project is a simple client dashboard built with **Next.js** and TypeScript. After logging in, users land on a dashboard with quick links to sections for accounts, documents, messages, reports and tasks. Styling is handled with Tailwind CSS and components are tested with Jest.
+A sample client dashboard built with **Next.js**, TypeScript and Tailwind CSS. Users log in and access sections for accounts, documents, messages, reports and tasks.
 
 ## Folder Structure
 
-```
-src/
-  app/             # Next.js app router pages and layouts
-  components/      # Reusable React components
-  context/         # React context for global state
-  hooks/           # Custom hooks and their tests
-  lib/             # Helper utilities (auth, etc.)
-  types/           # Shared TypeScript types
-public/            # Static assets served by Next.js
-```
+- `src/app` – Next.js routes and layouts
+- `src/components` – shared UI components
+- `src/context` – React context for global state
+- `src/hooks` – custom hooks with tests
+- `src/lib` – helper utilities
+- `src/types` – shared TypeScript types
+- `public` – static assets served by Next.js
 
-## Setup
+## Getting Started
 
-Install dependencies and start the development server:
+Install dependencies and run the development server:
 
 ```bash
 npm install
 npm run dev
 ```
 
-### Linting
+### Lint
 
 ```bash
 npm run lint
 ```
 
-### Running Tests
+### Tests
 
 ```bash
 npm test
 ```
 
+
+### Build
+=======
 ### Shadcn UI Library
 
 This project uses wrapper components based on the **shadcn/ui** library. If the
@@ -45,23 +45,11 @@ dependencies were not installed automatically, run:
 npm install @shadcn/ui
 ```
 
-### Production Build
 
-Create the optimized build output:
 
 ```bash
 npm run build
 ```
-
-## Deployment
-
-After running `npm run build`, start the server with:
-
-```bash
-npm start
-```
-
-The application can also be deployed to any platform that supports Node.js, such as Vercel or a traditional hosting provider.
 
 ## License
 
