@@ -18,9 +18,9 @@ import {
   Shield,
   TrendingUp,
   Users,
-  LucideProps
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
+import type { DocumentType } from '@/types';
 
 // Mock documents data
 const documentsData = [
@@ -100,19 +100,6 @@ const documentsData = [
 
 const categories = ['All', 'Reports', 'Contracts', 'Invoices'];
 
-type DocumentType = {
-  id: number;
-  name: string;
-  type: string;
-  category: string;
-  size: string;
-  date: string;
-  description: string;
-  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
-  color: string;
-  bgColor: string;
-};
-
 type PreviewModalState = {
   isOpen: boolean;
   document: DocumentType | null;
@@ -188,7 +175,8 @@ export default function DocumentsPage() {
     }
   };
 
-  const handlePreview = (document: { id: number; name: string; type: string; category: string; size: string; date: string; description: string; icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>; color: string; bgColor: string; }) => {
+  const handlePreview = (document: DocumentType | null) => {
+    if (!document) return;
     setPreviewModal({ isOpen: true, document });
   };
 
@@ -223,7 +211,7 @@ export default function DocumentsPage() {
                 type="text"
                 placeholder="Search documents..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2"
               />
             </div>
@@ -234,7 +222,7 @@ export default function DocumentsPage() {
                 <Filter className="h-5 w-5 text-slate-500" />
                 <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedCategory(e.target.value)}
                   className="px-3 py-2"
                 >
                   {categories.map(category => (

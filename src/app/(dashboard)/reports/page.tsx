@@ -167,9 +167,11 @@ export default function ReportsAnalyticsPage() {
 
   const handleExportData = () => {
     if (!currentData) return;
+
     const headers = Object.keys(currentData[0]);
     const rows = currentData.map((row) =>
       headers.map((h) => String((row as Record<string, unknown>)[h] ?? '')).join(',')
+
     );
     const csv = [headers.join(','), ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -274,7 +276,7 @@ export default function ReportsAnalyticsPage() {
             </div>
             <Select
               value={selectedPortfolio}
-              onChange={(e) => setSelectedPortfolio(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPortfolio(e.target.value)}
               className="px-3 py-2"
             >
               <option value="all">All Portfolios</option>
