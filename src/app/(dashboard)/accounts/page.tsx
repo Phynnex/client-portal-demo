@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { 
+import {
   CreditCard,
   TrendingUp,
   TrendingDown,
@@ -17,6 +17,7 @@ import {
   Home,
   Briefcase
 } from 'lucide-react';
+import { Button, Input, Select } from '@/components/ui';
 
 // Mock account data
 const accountsData = [
@@ -213,27 +214,27 @@ export default function AccountAggregationPage() {
           {/* Search */}
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
-            <input
+            <Input
               type="text"
               placeholder="Search accounts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2"
             />
           </div>
 
           {/* Account Type Filter */}
           <div className="flex items-center gap-2">
             <Filter className="h-5 w-5 text-slate-500" />
-            <select
+            <Select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-2"
             >
               {accountTypes.map(type => (
                 <option key={type} value={type}>{type}</option>
               ))}
-            </select>
+            </Select>
           </div>
         </div>
       </div>
@@ -301,16 +302,16 @@ export default function AccountAggregationPage() {
                 </div>
 
                 <div className="flex items-center space-x-2 ml-4">
-                  <button
+                  <Button
                     onClick={() => handleViewDetails(account)}
                     className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     <Eye className="h-4 w-4" />
                     <span>View Details</span>
-                  </button>
-                  <button className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+                  </Button>
+                  <Button variant="ghost" className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
                     <MoreVertical className="h-4 w-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -334,12 +335,13 @@ export default function AccountAggregationPage() {
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">Account Details</h3>
-                <button
+                <Button
                   onClick={closeDetails}
+                  variant="ghost"
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                 >
                   <MoreVertical className="h-5 w-5 text-gray-500 rotate-45" />
-                </button>
+                </Button>
               </div>
 
               <div className="space-y-6">
@@ -396,15 +398,15 @@ export default function AccountAggregationPage() {
                 </div>
 
                 <div className="flex space-x-3 pt-4">
-                  <button
+                  <Button
                     onClick={closeDetails}
                     className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
                   >
                     Close
-                  </button>
-                  <button className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                  </Button>
+                  <Button className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
                     Manage Account
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

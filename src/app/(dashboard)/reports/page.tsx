@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { 
+import {
   Download,
   Calendar,
   Filter,
@@ -16,6 +16,7 @@ import {
 
   ChevronDown
 } from 'lucide-react';
+import { Button, Select } from '@/components/ui';
 import { 
   LineChart, 
   Line, 
@@ -196,39 +197,42 @@ export default function ReportsAnalyticsPage() {
           
           {/* Export Actions */}
           <div className="relative">
-            <button
+            <Button
               onClick={() => setShowExportMenu(!showExportMenu)}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               <Download className="h-4 w-4" />
               <span>Export Report</span>
               <ChevronDown className="h-4 w-4" />
-            </button>
+            </Button>
             
             {showExportMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 z-10">
                 <div className="py-1">
-                  <button
+                  <Button
                     onClick={handleExportPDF}
+                    variant="ghost"
                     className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
                   >
                     <FileText className="h-4 w-4 text-red-500" />
                     <span>Export as PDF</span>
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={handleExportImage}
+                    variant="ghost"
                     className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
                   >
                     <Image className="h-4 w-4 text-green-500" />
                     <span>Export as Image</span>
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={handleExportData}
+                    variant="ghost"
                     className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
                   >
                     <Grid3X3 className="h-4 w-4 text-blue-500" />
                     <span>Export Data (CSV)</span>
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
@@ -247,9 +251,10 @@ export default function ReportsAnalyticsPage() {
             </div>
             <div className="flex space-x-1 bg-slate-100 rounded-lg p-1">
               {['1M', '3M', '1Y'].map((period) => (
-                <button
+                <Button
                   key={period}
                   onClick={() => setSelectedPeriod(period as '1M' | '3M' | '1Y')}
+                  variant="ghost"
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     selectedPeriod === period
                       ? 'bg-white text-slate-900 shadow-sm'
@@ -257,7 +262,7 @@ export default function ReportsAnalyticsPage() {
                   }`}
                 >
                   {period}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -268,40 +273,42 @@ export default function ReportsAnalyticsPage() {
               <Filter className="h-5 w-5 text-slate-500" />
               <span className="font-medium text-slate-700">Portfolio:</span>
             </div>
-            <select
+            <Select
               value={selectedPortfolio}
               onChange={(e) => setSelectedPortfolio(e.target.value)}
-              className="border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 py-2"
             >
               <option value="all">All Portfolios</option>
               <option value="growth">Growth Portfolio</option>
               <option value="income">Income Portfolio</option>
               <option value="balanced">Balanced Portfolio</option>
-            </select>
+            </Select>
           </div>
 
           {/* Chart Type Selector */}
           <div className="flex items-center space-x-2">
             <span className="font-medium text-slate-700">View:</span>
             <div className="flex space-x-1 bg-slate-100 rounded-lg p-1">
-              <button
+              <Button
                 onClick={() => setChartType('line')}
+                variant="ghost"
                 className={`p-2 rounded-md transition-colors ${
                   chartType === 'line' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'
                 }`}
                 title="Line Chart"
               >
                 <Activity className="h-4 w-4" />
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={() => setChartType('area')}
+                variant="ghost"
                 className={`p-2 rounded-md transition-colors ${
                   chartType === 'area' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'
                 }`}
                 title="Area Chart"
               >
                 <BarChart3 className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>
