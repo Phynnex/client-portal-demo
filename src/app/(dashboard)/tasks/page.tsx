@@ -330,7 +330,7 @@ export default function TasksNotificationsPage() {
                   type="text"
                   placeholder="Search tasks..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 text-sm"
                 />
               </div>
@@ -339,7 +339,7 @@ export default function TasksNotificationsPage() {
               <div className="flex items-center space-x-4">
                 <Select
                   value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterStatus(e.target.value)}
                   className="px-3 py-2 text-sm"
                 >
                   <option value="all">All Status</option>
@@ -350,7 +350,7 @@ export default function TasksNotificationsPage() {
 
                 <Select
                   value={filterPriority}
-                  onChange={(e) => setFilterPriority(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterPriority(e.target.value)}
                   className="px-3 py-2 text-sm"
                 >
                   <option value="all">All Priority</option>
