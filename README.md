@@ -21,6 +21,17 @@ npm install
 npm run dev
 ```
 
+### Environment Variables
+
+Create a `.env` file in the project root with the following values:
+
+```
+NEXTAUTH_SECRET=your-secret-here
+NEXTAUTH_URL=http://localhost:3000
+```
+
+These variables are required for the NextAuth authentication setup.
+
 ### Lint
 
 ```bash
