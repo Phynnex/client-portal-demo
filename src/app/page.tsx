@@ -93,7 +93,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="address"
                 disabled={isLoading}
               />
             </div>
