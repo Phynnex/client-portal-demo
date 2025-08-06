@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff, Waves } from 'lucide-react';
 import { Button, Input, Card, CardContent } from '@/components/ui';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 
 export default function LoginPage() {
@@ -32,20 +33,15 @@ export default function LoginPage() {
     }
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+      const res = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
       });
-
-      const data = await res.json();
-      if (res.ok) {
-        if (typeof window !== 'undefined' && data.name) {
-          localStorage.setItem('clientName', data.name);
-        }
+      if (res?.ok) {
         router.push('/dashboard');
       } else {
-        setError(data.message || 'Login failed');
+        setError(res?.error || 'Login failed');
       }
     } catch (err) {
       console.error(err);
