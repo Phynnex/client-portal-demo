@@ -13,7 +13,7 @@ const handler = NextAuth({
         const email = credentials?.email as string;
         const password = credentials?.password as string;
         if (email === 'demo@bluemarina.com' && password === 'demo123') {
-          return { id: '1', name: 'John Anderson', email };
+          return { id: '1', name: 'Johner Anderson', email };
         }
         return null;
       },
@@ -22,6 +22,7 @@ const handler = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
+    maxAge: 1 * 60,
   },
 });
 
