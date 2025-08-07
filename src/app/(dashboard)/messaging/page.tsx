@@ -1,16 +1,30 @@
+
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import { useClient } from '@/context/ClientContext';
 import { Send, Search, MoreVertical, Phone, Video } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import type { Conversation, Message } from '@/types';
 
 export default function SecureMessagingPage() {
   const { clientName } = useClient();
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState('');
+  const messageSchema = z.object({
+    message: z.string().min(1, 'Message cannot be empty'),
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<z.infer<typeof messageSchema>>({
+    resolver: zodResolver(messageSchema),
+  });
   const [searchTerm, setSearchTerm] = useState('');
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,28 +78,28 @@ export default function SecureMessagingPage() {
     return <div className="p-4 sm:p-6 lg:p-8">Error loading messages.</div>;
   }
 
-  const handleSendMessage = async () => {
-    if (newMessage.trim() && selectedConversation) {
-      const message = {
+  const onSubmit = async ({ message }: z.infer<typeof messageSchema>) => {
+    if (selectedConversation) {
+      const newMsg = {
         id: messages.length + 1,
         senderId: 'user',
         senderName: clientName,
-        content: newMessage,
+        content: message,
         timestamp: new Date().toISOString(),
         type: 'sent',
       };
 
-      setMessages([...messages, message]);
-      setNewMessage('');
+      setMessages([...messages, newMsg]);
 
       try {
         const res = await fetch('/api/messages', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ conversationId: selectedConversation.id, message: newMessage }),
+          body: JSON.stringify({ conversationId: selectedConversation.id, message }),
         });
         if (res.ok) {
           await res.json();
+          reset();
         }
       } catch (err) {
         console.error(err);
@@ -167,18 +181,22 @@ export default function SecureMessagingPage() {
           <div ref={messagesEndRef} />
         </div>
         <div className="p-4 border-t border-slate-200">
-          <div className="flex items-center space-x-2">
-            <Input
-              type="text"
-              value={newMessage}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewMessage(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-1"
-            />
-            <Button onClick={handleSendMessage} className="px-4">
-              <Send className="h-5 w-5" />
-            </Button>
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <Input
+                type="text"
+                placeholder="Type a message..."
+                className="flex-1"
+                {...register('message')}
+              />
+              <Button type="submit" className="px-4">
+                <Send className="h-5 w-5" />
+              </Button>
+            </div>
+            {errors.message && (
+              <p className="text-sm text-red-500">{errors.message.message}</p>
+            )}
+          </form>
         </div>
       </section>
     </div>
