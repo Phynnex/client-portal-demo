@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
-import { Bell, User, Menu } from 'lucide-react';
+import { Bell, User, Menu, Sun, Moon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui';
 import { useClient } from '@/context/ClientContext';
 
@@ -9,11 +10,13 @@ interface NavbarProps {
   pageTitle?: string;
 }
 
-export default function Navbar({ 
+export default function Navbar({
   setIsMobileMenuOpen,
   pageTitle = "Dashboard",
 }: NavbarProps) {
   const { clientName } = useClient();
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === 'dark';
   return (
     <header className="bg-white shadow-sm border-b border-slate-200">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -38,6 +41,24 @@ export default function Navbar({
             <Button variant="ghost" size="icon" className="relative text-slate-600 hover:text-slate-900">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
+            </Button>
+            <Button
+              variant="ghost"
+              className="flex items-center space-x-1 text-slate-600 hover:text-slate-900"
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                <>
+                  <Moon className="h-5 w-5" />
+                  <span className="text-sm">Dark</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="h-5 w-5" />
+                  <span className="text-sm">Light</span>
+                </>
+              )}
             </Button>
             <div className="hidden md:flex items-center space-x-2">
               <div className="bg-blue-100 p-2 rounded-full">
