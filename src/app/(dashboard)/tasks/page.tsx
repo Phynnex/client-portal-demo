@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CheckCircle,
   Clock,
@@ -42,14 +45,26 @@ const notificationTypes = {
   error: { color: 'text-red-600', bg: 'bg-red-100' }
 };
 
+const filterSchema = z.object({
+  search: z.string().default(''),
+  status: z.enum(['all', 'pending', 'in-progress', 'completed']),
+  priority: z.enum(['all', 'high', 'medium', 'low'])
+});
+type FilterForm = z.infer<typeof filterSchema>;
+
 export default function TasksNotificationsPage() {
   const [activeTab, setActiveTab] = useState('tasks');
   const [tasks, setTasks] = useState<Task[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [filterPriority, setFilterPriority] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
   const [showNotificationBanner, setShowNotificationBanner] = useState(true);
+
+  const { register, watch, formState: { errors } } = useForm<FilterForm>({
+    resolver: zodResolver(filterSchema),
+    defaultValues: { search: '', status: 'all', priority: 'all' }
+  });
+  const searchTerm = watch('search');
+  const filterStatus = watch('status');
+  const filterPriority = watch('priority');
 
   const { data: tasksQueryData = [], isLoading: tasksLoading, isError: tasksError } = useQuery<Task[]>({
     queryKey: ['tasks'],
@@ -261,35 +276,39 @@ export default function TasksNotificationsPage() {
                 <Input
                   type="text"
                   placeholder="Search tasks..."
-                  value={searchTerm}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 text-sm"
+                  {...register('search')}
                 />
+                {errors.search && (
+                  <p className="text-red-600 text-xs mt-1">{errors.search.message}</p>
+                )}
               </div>
 
               {/* Filters */}
               <div className="flex items-center space-x-4">
-                <Select
-                  value={filterStatus}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterStatus(e.target.value)}
-                  className="px-3 py-2 text-sm"
-                >
-                  <option value="all">All Status</option>
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </Select>
+                <div className="flex flex-col">
+                  <Select className="px-3 py-2 text-sm" {...register('status')}>
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                  {errors.status && (
+                    <p className="text-red-600 text-xs mt-1">{errors.status.message}</p>
+                  )}
+                </div>
 
-                <Select
-                  value={filterPriority}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterPriority(e.target.value)}
-                  className="px-3 py-2 text-sm"
-                >
-                  <option value="all">All Priority</option>
-                  <option value="high">High</option>
-                  <option value="medium">Medium</option>
-                  <option value="low">Low</option>
-                </Select>
+                <div className="flex flex-col">
+                  <Select className="px-3 py-2 text-sm" {...register('priority')}>
+                    <option value="all">All Priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </Select>
+                  {errors.priority && (
+                    <p className="text-red-600 text-xs mt-1">{errors.priority.message}</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
