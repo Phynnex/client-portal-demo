@@ -11,35 +11,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Button } from '@/components/ui';
-
-interface PortfolioPoint {
-  month: string;
-  value: number;
-  growth: number;
-}
-
-interface AllocationItem {
-  name: string;
-  value: number;
-  color: string;
-}
-
-interface Transaction {
-  id: number;
-  type: string;
-  asset: string;
-  amount: string;
-  date: string;
-}
-
-interface DashboardData {
-  totalAssets: number;
-  ytdGrowth: number;
-  riskLevel: string;
-  portfolioData: PortfolioPoint[];
-  assetAllocation: AllocationItem[];
-  recentTransactions: Transaction[];
-}
+import { DashboardData } from '@/types';
 
 interface DashboardContentProps {
   clientName: string;
