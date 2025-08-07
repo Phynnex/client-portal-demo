@@ -20,89 +20,28 @@ import {
   Users,
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
-import type { DocumentType } from '@/types';
+import { useQuery } from '@tanstack/react-query';
 
-// Mock documents data
-const documentsData = [
-  {
-    id: 1,
-    name: 'Portfolio Performance Report Q2 2025',
-    type: 'PDF',
-    category: 'Reports',
-    size: '2.4 MB',
-    date: '2025-05-28',
-    description: 'Quarterly performance analysis and market insights',
-    icon: TrendingUp,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100'
-  },
-  {
-    id: 2,
-    name: 'Investment Agreement - Amendment 3',
-    type: 'PDF',
-    category: 'Contracts',
-    size: '1.8 MB',
-    date: '2025-05-25',
-    description: 'Updated terms and conditions for investment portfolio',
-    icon: Shield,
-    color: 'text-green-600',
-    bgColor: 'bg-green-100'
-  },
-  {
-    id: 3,
-    name: 'Monthly Invoice - May 2025',
-    type: 'PDF',
-    category: 'Invoices',
-    size: '524 KB',
-    date: '2025-05-20',
-    description: 'Management fees and transaction costs',
-    icon: Receipt,
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100'
-  },
-  {
-    id: 4,
-    name: 'Risk Assessment Report',
-    type: 'PDF',
-    category: 'Reports',
-    size: '3.1 MB',
-    date: '2025-05-15',
-    description: 'Comprehensive risk analysis for current holdings',
-    icon: PieChart,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-100'
-  },
-  {
-    id: 5,
-    name: 'Account Opening Documentation',
-    type: 'PDF',
-    category: 'Contracts',
-    size: '1.2 MB',
-    date: '2025-01-10',
-    description: 'Initial account setup and KYC documents',
-    icon: Users,
-    color: 'text-teal-600',
-    bgColor: 'bg-teal-100'
-  },
-  {
-    id: 6,
-    name: 'Tax Summary 2024',
-    type: 'XLSX',
-    category: 'Reports',
-    size: '890 KB',
-    date: '2025-01-31',
-    description: 'Annual tax summary for reporting purposes',
-    icon: FileText,
-    color: 'text-indigo-600',
-    bgColor: 'bg-indigo-100'
-  }
-];
+const iconMap = { TrendingUp, Shield, Receipt, PieChart, Users, FileText };
+
+interface Document {
+  id: number;
+  name: string;
+  type: string;
+  category: string;
+  size: string;
+  date: string;
+  description: string;
+  icon: keyof typeof iconMap;
+  color: string;
+  bgColor: string;
+}
 
 const categories = ['All', 'Reports', 'Contracts', 'Invoices'];
 
 type PreviewModalState = {
   isOpen: boolean;
-  document: DocumentType | null;
+  document: Document | null;
 };
 
 const ENABLE_DOC_ACTIONS = process.env.NEXT_PUBLIC_ENABLE_DOCS_ACTIONS === 'true';
@@ -113,6 +52,25 @@ export default function DocumentsPage() {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [previewModal, setPreviewModal] = useState<PreviewModalState>({ isOpen: false, document: null });
 
+  const { data: documentsData = [], isLoading, isError } = useQuery<Document[]>({
+    queryKey: ['documents'],
+    queryFn: async () => {
+      const res = await fetch('/api/documents');
+      if (!res.ok) {
+        throw new Error('Failed to fetch documents');
+      }
+      return res.json();
+    },
+  });
+
+  if (isLoading) {
+    return <div className="p-4 sm:p-6 lg:p-8">Loading documents...</div>;
+  }
+
+  if (isError) {
+    return <div className="p-4 sm:p-6 lg:p-8">Error loading documents.</div>;
+  }
+
   // Filter documents based on category and search
   const filteredDocuments = documentsData.filter(doc => {
     const matchesCategory = selectedCategory === 'All' || doc.category === selectedCategory;
@@ -121,7 +79,7 @@ export default function DocumentsPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const handleDownload = async (doc: DocumentType | null) => {
+  const handleDownload = async (doc: Document | null) => {
     if (!doc) return;
     if (!ENABLE_DOC_ACTIONS) {
       alert('Download feature disabled');
@@ -145,7 +103,7 @@ export default function DocumentsPage() {
     }
   };
 
-  const handleShare = async (doc: DocumentType | null) => {
+  const handleShare = async (doc: Document | null) => {
     if (!doc) return;
     if (!ENABLE_DOC_ACTIONS) {
       alert('Share feature disabled');
@@ -175,7 +133,7 @@ export default function DocumentsPage() {
     }
   };
 
-  const handlePreview = (document: DocumentType | null) => {
+  const handlePreview = (document: Document | null) => {
     if (!document) return;
     setPreviewModal({ isOpen: true, document });
   };
@@ -260,7 +218,7 @@ export default function DocumentsPage() {
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredDocuments.map((document) => {
-              const Icon = document.icon;
+              const Icon = iconMap[document.icon as keyof typeof iconMap];
               return (
                 <div key={document.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between mb-4">
@@ -332,7 +290,7 @@ export default function DocumentsPage() {
                 </thead>
                 <tbody>
                   {filteredDocuments.map((document) => {
-                    const Icon = document.icon;
+                    const Icon = iconMap[document.icon as keyof typeof iconMap];
                     return (
                       <tr key={document.id} className="border-b border-slate-100 hover:bg-slate-50">
                         <td className="py-4 px-6">
@@ -423,7 +381,10 @@ export default function DocumentsPage() {
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
                       <div className={`p-3 rounded-lg ${previewModal.document.bgColor}`}>
-                        <previewModal.document.icon className={`h-6 w-6 ${previewModal.document.color}`} />
+                        {(() => {
+                          const Icon = iconMap[previewModal.document.icon as keyof typeof iconMap];
+                          return <Icon className={`h-6 w-6 ${previewModal.document.color}`} />;
+                        })()}
                       </div>
                       <div>
                         <h4 className="font-medium text-gray-900">{previewModal.document.name}</h4>
