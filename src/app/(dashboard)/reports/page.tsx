@@ -127,7 +127,7 @@ export default function ReportsAnalyticsPage() {
     const headers = Object.keys(currentData[0]);
 
     const rows = currentData.map(row =>
-      headers.map(h => String((row as Record<string, unknown>)[h] ?? '')).join(',')
+      headers.map(h => String((row as unknown as Record<string, unknown>)[h] ?? '')).join(',')
 
     );
     const csv = [headers.join(','), ...rows].join('\n');
@@ -144,13 +144,13 @@ export default function ReportsAnalyticsPage() {
   const currentData = performanceData[selectedPeriod];
 
   return (
-    <div ref={reportRef} className="p-4 sm:p-6 lg:p-8">
+    <div ref={reportRef} className="min-h-screen p-4 sm:p-6 lg:p-8 text-slate-900 dark:text-slate-100">
       {/* Header */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">Reports & Analytics</h1>
-            <p className="text-slate-600">Comprehensive portfolio analysis and performance insights</p>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Reports & Analytics</h1>
+            <p className="text-slate-600 dark:text-slate-400">Comprehensive portfolio analysis and performance insights</p>
           </div>
           
           {/* Export Actions */}
@@ -165,12 +165,12 @@ export default function ReportsAnalyticsPage() {
             </Button>
             
             {showExportMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 z-10">
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-10">
                 <div className="py-1">
                   <Button
                     onClick={handleExportPDF}
                     variant="ghost"
-                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
+                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <FileText className="h-4 w-4 text-red-500" />
                     <span>Export as PDF</span>
@@ -178,7 +178,7 @@ export default function ReportsAnalyticsPage() {
                   <Button
                     onClick={handleExportImage}
                     variant="ghost"
-                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
+                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <ImageIcon className="h-4 w-4 text-green-500" />
                     <span>Export as Image</span>
@@ -186,7 +186,7 @@ export default function ReportsAnalyticsPage() {
                   <Button
                     onClick={handleExportData}
                     variant="ghost"
-                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50"
+                    className="flex items-center space-x-2 w-full px-4 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <Grid3X3 className="h-4 w-4 text-blue-500" />
                     <span>Export Data (CSV)</span>
@@ -199,15 +199,15 @@ export default function ReportsAnalyticsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Time Period Filter */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Calendar className="h-5 w-5 text-slate-500" />
-              <span className="font-medium text-slate-700">Time Period:</span>
+              <Calendar className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+              <span className="font-medium text-slate-700 dark:text-slate-300">Time Period:</span>
             </div>
-            <div className="flex space-x-1 bg-slate-100 rounded-lg p-1">
+            <div className="flex space-x-1 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
               {['1M', '3M', '1Y'].map((period) => (
                 <Button
                   key={period}
@@ -215,8 +215,8 @@ export default function ReportsAnalyticsPage() {
                   variant="ghost"
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                     selectedPeriod === period
-                      ? 'bg-white text-slate-900 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
+                      ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                   }`}
                 >
                   {period}
@@ -228,13 +228,13 @@ export default function ReportsAnalyticsPage() {
           {/* Portfolio Filter */}
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <Filter className="h-5 w-5 text-slate-500" />
-              <span className="font-medium text-slate-700">Portfolio:</span>
+              <Filter className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+              <span className="font-medium text-slate-700 dark:text-slate-300">Portfolio:</span>
             </div>
             <Select
               value={selectedPortfolio}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPortfolio(e.target.value)}
-              className="px-3 py-2"
+              className="px-3 py-2 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="all">All Portfolios</option>
               <option value="growth">Growth Portfolio</option>
@@ -245,13 +245,13 @@ export default function ReportsAnalyticsPage() {
 
           {/* Chart Type Selector */}
           <div className="flex items-center space-x-2">
-            <span className="font-medium text-slate-700">View:</span>
-            <div className="flex space-x-1 bg-slate-100 rounded-lg p-1">
+            <span className="font-medium text-slate-700 dark:text-slate-300">View:</span>
+            <div className="flex space-x-1 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
               <Button
                 onClick={() => setChartType('line')}
                 variant="ghost"
                 className={`p-2 rounded-md transition-colors ${
-                  chartType === 'line' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'
+                  chartType === 'line' ? 'bg-white dark:bg-slate-800 shadow-sm' : 'hover:bg-slate-200 dark:hover:bg-slate-600'
                 }`}
                 title="Line Chart"
               >
@@ -261,7 +261,7 @@ export default function ReportsAnalyticsPage() {
                 onClick={() => setChartType('area')}
                 variant="ghost"
                 className={`p-2 rounded-md transition-colors ${
-                  chartType === 'area' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'
+                  chartType === 'area' ? 'bg-white dark:bg-slate-800 shadow-sm' : 'hover:bg-slate-200 dark:hover:bg-slate-600'
                 }`}
                 title="Area Chart"
               >
@@ -273,17 +273,17 @@ export default function ReportsAnalyticsPage() {
       </div>
 
       {/* Portfolio Performance Chart */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-slate-900">Portfolio Performance vs Benchmark</h3>
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Portfolio Performance vs Benchmark</h3>
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-sm text-slate-600">Portfolio</span>
+              <span className="text-sm text-slate-600 dark:text-slate-400">Portfolio</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-slate-400 rounded-full"></div>
-              <span className="text-sm text-slate-600">Benchmark</span>
+              <span className="text-sm text-slate-600 dark:text-slate-400">Benchmark</span>
             </div>
           </div>
         </div>
@@ -294,8 +294,8 @@ export default function ReportsAnalyticsPage() {
               <LineChart data={currentData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="period" stroke="#64748b" fontSize={12} />
-                <YAxis 
-                  stroke="#64748b" 
+                <YAxis
+                  stroke="#64748b"
                   fontSize={12}
                   tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
                 />
@@ -368,8 +368,8 @@ export default function ReportsAnalyticsPage() {
       {/* Asset Allocation & Sector Analysis */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Asset Allocation */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Asset Allocation</h3>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Asset Allocation</h3>
           <div className="h-64 mb-4">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -403,15 +403,15 @@ export default function ReportsAnalyticsPage() {
             {assetAllocationData.map((item, index) => (
               <div key={index} className="flex items-center justify-between py-1">
                 <div className="flex items-center space-x-2">
-                  <div 
+                  <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: item.color }}
                   ></div>
-                  <span className="text-sm text-slate-700">{item.name}</span>
+                  <span className="text-sm text-slate-700 dark:text-slate-300">{item.name}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-sm font-medium text-slate-900">{item.value}%</span>
-                  <div className="text-xs text-slate-500">{formatCurrency(item.amount)}</div>
+                  <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{item.value}%</span>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{formatCurrency(item.amount)}</div>
                 </div>
               </div>
             ))}
@@ -419,17 +419,17 @@ export default function ReportsAnalyticsPage() {
         </div>
 
         {/* Sector Performance */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Sector Performance</h3>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Sector Performance</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={sectorData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis type="number" stroke="#64748b" fontSize={11} />
-                <YAxis 
-                  type="category" 
-                  dataKey="sector" 
-                  stroke="#64748b" 
+                <YAxis
+                  type="category"
+                  dataKey="sector"
+                  stroke="#64748b"
                   fontSize={11}
                   width={80}
                 />
@@ -438,7 +438,7 @@ export default function ReportsAnalyticsPage() {
                       name === 'allocation' ? `${value}%` : `${formatPercent(value)}`,
                       name === 'allocation' ? 'Allocation' : 'Performance'
                     ]}
-                  />
+                />
                 <Bar dataKey="allocation" fill="#0ea5e9" />
                 <Bar dataKey="performance" fill="#14b8a6" />
               </BarChart>
@@ -450,8 +450,8 @@ export default function ReportsAnalyticsPage() {
       {/* Income Analysis & Risk Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Income Analysis */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Income Analysis</h3>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Income Analysis</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={incomeData}>
@@ -471,35 +471,35 @@ export default function ReportsAnalyticsPage() {
         </div>
 
         {/* Risk Metrics Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Risk Metrics</h3>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Risk Metrics</h3>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-slate-200">
-                  <th className="text-left py-3 px-2 font-medium text-slate-700">Metric</th>
-                  <th className="text-right py-3 px-2 font-medium text-slate-700">Portfolio</th>
-                  <th className="text-right py-3 px-2 font-medium text-slate-700">Benchmark</th>
-                  <th className="text-right py-3 px-2 font-medium text-slate-700">Target</th>
+                <tr className="border-b border-slate-200 dark:border-slate-700">
+                  <th className="text-left py-3 px-2 font-medium text-slate-700 dark:text-slate-300">Metric</th>
+                  <th className="text-right py-3 px-2 font-medium text-slate-700 dark:text-slate-300">Portfolio</th>
+                  <th className="text-right py-3 px-2 font-medium text-slate-700 dark:text-slate-300">Benchmark</th>
+                  <th className="text-right py-3 px-2 font-medium text-slate-700 dark:text-slate-300">Target</th>
                 </tr>
               </thead>
               <tbody>
                 {riskMetricsData.map((metric, index) => (
-                  <tr key={index} className="border-b border-slate-100">
-                    <td className="py-3 px-2 text-slate-900">{metric.metric}</td>
-                    <td className="py-3 px-2 text-right font-medium text-slate-900">
-                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown' 
-                        ? `${metric.portfolio}%` 
+                  <tr key={index} className="border-b border-slate-100 dark:border-slate-700">
+                    <td className="py-3 px-2 text-slate-900 dark:text-slate-100">{metric.metric}</td>
+                    <td className="py-3 px-2 text-right font-medium text-slate-900 dark:text-slate-100">
+                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown'
+                        ? `${metric.portfolio}%`
                         : metric.portfolio}
                     </td>
-                    <td className="py-3 px-2 text-right text-slate-600">
-                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown' 
-                        ? `${metric.benchmark}%` 
+                    <td className="py-3 px-2 text-right text-slate-600 dark:text-slate-400">
+                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown'
+                        ? `${metric.benchmark}%`
                         : metric.benchmark}
                     </td>
-                    <td className="py-3 px-2 text-right text-slate-500">
-                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown' 
-                        ? `${metric.target}%` 
+                    <td className="py-3 px-2 text-right text-slate-500 dark:text-slate-400">
+                      {metric.metric.includes('%') || metric.metric === 'Max Drawdown'
+                        ? `${metric.target}%`
                         : metric.target}
                     </td>
                   </tr>
@@ -511,12 +511,12 @@ export default function ReportsAnalyticsPage() {
       </div>
 
       {/* Performance Summary */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-        <h3 className="text-lg font-semibold text-slate-900 mb-6">Performance Summary</h3>
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Performance Summary</h3>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="text-2xl font-bold text-green-600 mb-1">+12.4%</div>
-            <div className="text-sm text-slate-600">YTD Return</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400">YTD Return</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-blue-600 mb-1">+18.7%</div>

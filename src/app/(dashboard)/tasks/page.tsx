@@ -174,27 +174,27 @@ export default function TasksNotificationsPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8 text-slate-900 dark:text-slate-100">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Tasks & Notifications</h1>
-        <p className="text-slate-600">Manage your pending tasks and stay updated with important notifications</p>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Tasks & Notifications</h1>
+        <p className="text-slate-600 dark:text-slate-400">Manage your pending tasks and stay updated with important notifications</p>
       </div>
 
       {/* Notification Banner */}
       {showNotificationBanner && unreadCount > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+        <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Bell className="h-5 w-5 text-blue-600" />
             <div>
-              <p className="font-medium text-blue-900">You have {unreadCount} unread notifications</p>
-              <p className="text-sm text-blue-700">Stay updated with your latest account activities</p>
+              <p className="font-medium text-blue-900 dark:text-blue-100">You have {unreadCount} unread notifications</p>
+              <p className="text-sm text-blue-700 dark:text-blue-300">Stay updated with your latest account activities</p>
             </div>
           </div>
           <Button
             onClick={() => setShowNotificationBanner(false)}
             variant="ghost"
-            className="text-blue-500 hover:text-blue-700"
+            className="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-100"
           >
             <X className="h-5 w-5" />
           </Button>
@@ -202,14 +202,14 @@ export default function TasksNotificationsPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex space-x-1 bg-slate-100 rounded-lg p-1 mb-6 w-fit">
+      <div className="flex space-x-1 bg-slate-100 dark:bg-slate-700 rounded-lg p-1 mb-6 w-fit">
         <Button
           onClick={() => setActiveTab('tasks')}
           variant="ghost"
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
             activeTab === 'tasks'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
           }`}
         >
           Tasks
@@ -224,8 +224,8 @@ export default function TasksNotificationsPage() {
           variant="ghost"
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
             activeTab === 'notifications'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
           }`}
         >
           Notifications
@@ -242,28 +242,28 @@ export default function TasksNotificationsPage() {
         <div>
           {/* Task Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-white rounded-lg border border-slate-200 p-4">
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-600">Pending Tasks</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Pending Tasks</p>
                   <p className="text-2xl font-bold text-orange-600">{taskCounts.pending}</p>
                 </div>
                 <Clock className="h-8 w-8 text-orange-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg border border-slate-200 p-4">
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-600">In Progress</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">In Progress</p>
                   <p className="text-2xl font-bold text-blue-600">{taskCounts['in-progress']}</p>
                 </div>
                 <AlertCircle className="h-8 w-8 text-blue-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg border border-slate-200 p-4">
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-600">Completed</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Completed</p>
                   <p className="text-2xl font-bold text-green-600">{taskCounts.completed}</p>
                 </div>
                 <CheckCircle className="h-8 w-8 text-green-600" />
@@ -272,15 +272,15 @@ export default function TasksNotificationsPage() {
           </div>
 
           {/* Task Filters */}
-          <div className="bg-white rounded-lg border border-slate-200 p-4 mb-6">
+          <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-4 mb-6">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               {/* Search */}
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 dark:text-slate-500 h-4 w-4" />
                 <Input
                   type="text"
                   placeholder="Search tasks..."
-                  className="w-full pl-10 pr-4 py-2 text-sm"
+                  className="w-full pl-10 pr-4 py-2 text-sm dark:bg-slate-900 dark:text-slate-100"
                   {...register('search')}
                 />
                 {errors.search && (
@@ -291,7 +291,7 @@ export default function TasksNotificationsPage() {
               {/* Filters */}
               <div className="flex items-center space-x-4">
                 <div className="flex flex-col">
-                  <Select className="px-3 py-2 text-sm" {...register('status')}>
+                  <Select className="px-3 py-2 text-sm dark:bg-slate-900 dark:text-slate-100" {...register('status')}>
                     <option value="all">All Status</option>
                     <option value="pending">Pending</option>
                     <option value="in-progress">In Progress</option>
@@ -303,7 +303,7 @@ export default function TasksNotificationsPage() {
                 </div>
 
                 <div className="flex flex-col">
-                  <Select className="px-3 py-2 text-sm" {...register('priority')}>
+                  <Select className="px-3 py-2 text-sm dark:bg-slate-900 dark:text-slate-100" {...register('priority')}>
                     <option value="all">All Priority</option>
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
@@ -325,16 +325,16 @@ export default function TasksNotificationsPage() {
               const priorityInfo = priorityConfig[task.priority as keyof typeof priorityConfig];
 
               return (
-                <div key={task.id} className="bg-white rounded-lg border border-slate-200 p-6 hover:shadow-md transition-shadow">
+                <div key={task.id} className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4 flex-1">
-                      <div className="bg-slate-100 p-3 rounded-lg">
-                        <Icon className="h-6 w-6 text-slate-600" />
+                      <div className="bg-slate-100 dark:bg-slate-700 p-3 rounded-lg">
+                        <Icon className="h-6 w-6 text-slate-600 dark:text-slate-300" />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="font-semibold text-slate-900">{task.title}</h3>
+                          <h3 className="font-semibold text-slate-900 dark:text-slate-100">{task.title}</h3>
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusInfo.bg} ${statusInfo.color}`}>
                             {statusInfo.label}
                           </span>
@@ -342,10 +342,10 @@ export default function TasksNotificationsPage() {
                             {priorityInfo.label} Priority
                           </span>
                         </div>
-                        
-                        <p className="text-slate-600 mb-3">{task.description}</p>
-                        
-                        <div className="flex items-center justify-between text-sm text-slate-500">
+
+                        <p className="text-slate-600 dark:text-slate-400 mb-3">{task.description}</p>
+
+                        <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
                           <div className="flex items-center space-x-4">
                             <span>Due: {formatDate(task.dueDate)}</span>
                             <span>Created: {formatDate(task.createdAt)}</span>
@@ -358,7 +358,7 @@ export default function TasksNotificationsPage() {
                       {task.status === 'pending' && (
                         <Button
                           onClick={() => handleTaskStatusUpdate(task.id, 'in-progress')}
-                          className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm"
+                          className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-100 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors text-sm"
                         >
                           Start
                         </Button>
@@ -366,7 +366,7 @@ export default function TasksNotificationsPage() {
                       {task.status === 'in-progress' && (
                         <Button
                           onClick={() => handleTaskStatusUpdate(task.id, 'completed')}
-                          className="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm"
+                          className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-100 rounded-lg hover:bg-green-200 dark:hover:bg-green-800 transition-colors text-sm"
                         >
                           Complete
                         </Button>
@@ -377,7 +377,7 @@ export default function TasksNotificationsPage() {
                           <span className="text-sm font-medium">Done</span>
                         </div>
                       )}
-                      <Button variant="ghost" className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+                      <Button variant="ghost" className="p-2 text-slate-400 dark:text-slate-300 hover:text-slate-600 dark:hover:text-slate-100 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </div>
@@ -390,8 +390,8 @@ export default function TasksNotificationsPage() {
           {filteredTasks.length === 0 && (
             <div className="text-center py-12">
               <CheckCircle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">No tasks found</h3>
-              <p className="text-slate-600">Try adjusting your search or filter criteria.</p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">No tasks found</h3>
+              <p className="text-slate-600 dark:text-slate-400">Try adjusting your search or filter criteria.</p>
             </div>
           )}
         </div>
@@ -403,9 +403,9 @@ export default function TasksNotificationsPage() {
           {/* Notification Actions */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
-              <h2 className="text-lg font-semibold text-slate-900">Recent Notifications</h2>
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Recent Notifications</h2>
               {unreadCount > 0 && (
-                <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full text-sm font-medium">
+                <span className="px-2 py-1 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 rounded-full text-sm font-medium">
                   {unreadCount} unread
                 </span>
               )}
@@ -414,7 +414,7 @@ export default function TasksNotificationsPage() {
               <Button
                 onClick={handleMarkAllAsRead}
                 variant="ghost"
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100 text-sm font-medium"
               >
                 Mark all as read
               </Button>
@@ -430,29 +430,29 @@ export default function TasksNotificationsPage() {
               return (
                 <div
                   key={notification.id}
-                  className={`bg-white border border-slate-200 rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer ${
+                  className={`bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer ${
                     !notification.read ? 'border-l-4 border-l-blue-500' : ''
                   }`}
                   onClick={() => handleMarkAsRead(notification.id)}
                 >
                   <div className="flex items-start space-x-4">
-                    <div className={`p-2 rounded-lg ${typeInfo.bg}`}>
+                    <div className={`p-2 rounded-lg ${typeInfo.bg}`}> 
                       <Icon className={`h-5 w-5 ${typeInfo.color}`} />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <h4 className={`font-medium ${!notification.read ? 'text-slate-900' : 'text-slate-700'}`}>
+                        <h4 className={`font-medium ${!notification.read ? 'text-slate-900 dark:text-slate-100' : 'text-slate-700 dark:text-slate-300'}`}>
                           {notification.title}
                         </h4>
                         <div className="flex items-center space-x-2">
-                          <span className="text-xs text-slate-500">{formatTimestamp(notification.timestamp)}</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400">{formatTimestamp(notification.timestamp)}</span>
                           {!notification.read && (
                             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                           )}
                         </div>
                       </div>
-                      <p className={`text-sm ${!notification.read ? 'text-slate-600' : 'text-slate-500'}`}>
+                      <p className={`text-sm ${!notification.read ? 'text-slate-600 dark:text-slate-400' : 'text-slate-500 dark:text-slate-400'}`}>
                         {notification.message}
                       </p>
                     </div>
@@ -465,8 +465,8 @@ export default function TasksNotificationsPage() {
           {notifications.length === 0 && (
             <div className="text-center py-12">
               <Bell className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">No notifications</h3>
-              <p className="text-slate-600">You&apos;re all caught up! New notifications will appear here.</p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">No notifications</h3>
+              <p className="text-slate-600 dark:text-slate-400">You&apos;re all caught up! New notifications will appear here.</p>
             </div>
           )}
         </div>
