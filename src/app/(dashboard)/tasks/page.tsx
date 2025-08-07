@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CheckCircle,
   Clock,
@@ -18,114 +18,10 @@ import {
   Check,
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
+import { useQuery } from '@tanstack/react-query';
+import type { Task, Notification } from '@/types';
 
-// Mock tasks data
-const tasksData = [
-  {
-    id: 1,
-    title: 'Upload KYC Documents',
-    description: 'Please upload your updated Know Your Customer documents for regulatory compliance.',
-    priority: 'high',
-    status: 'pending',
-    dueDate: '2025-06-05',
-    category: 'compliance',
-    icon: Upload,
-    createdAt: '2025-05-20'
-  },
-  {
-    id: 2,
-    title: 'Review Investment Agreement Amendment',
-    description: 'New terms and conditions require your review and digital signature.',
-    priority: 'medium',
-    status: 'in-progress',
-    dueDate: '2025-06-10',
-    category: 'legal',
-    icon: FileText,
-    createdAt: '2025-05-25'
-  },
-  {
-    id: 3,
-    title: 'Schedule Quarterly Portfolio Review',
-    description: 'Book your Q2 portfolio review meeting with your advisor.',
-    priority: 'medium',
-    status: 'pending',
-    dueDate: '2025-06-15',
-    category: 'meeting',
-    icon: Calendar,
-    createdAt: '2025-05-28'
-  },
-  {
-    id: 4,
-    title: 'Update Risk Assessment Profile',
-    description: 'Annual risk tolerance assessment is due for review.',
-    priority: 'low',
-    status: 'completed',
-    dueDate: '2025-05-30',
-    category: 'profile',
-    icon: Shield,
-    createdAt: '2025-05-15'
-  },
-  {
-    id: 5,
-    title: 'Verify Bank Account Information',
-    description: 'Confirm your linked bank account details for dividend payments.',
-    priority: 'high',
-    status: 'pending',
-    dueDate: '2025-06-01',
-    category: 'banking',
-    icon: CreditCard,
-    createdAt: '2025-05-29'
-  }
-];
-
-// Mock notifications data
-const notificationsData = [
-  {
-    id: 1,
-    title: 'Portfolio Performance Update',
-    message: 'Your portfolio has gained 2.3% this week, outperforming the market.',
-    type: 'success' as const,
-    timestamp: '2025-05-29T10:30:00Z',
-    read: false,
-    icon: TrendingUp as React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>
-  },
-  {
-    id: 2,
-    title: 'Document Processing Complete',
-    message: 'Your Q2 tax documents have been processed and are ready for download.',
-    type: 'info' as const,
-    timestamp: '2025-05-29T09:15:00Z',
-    read: false,
-    icon: FileText as React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>
-  },
-  {
-    id: 3,
-    title: 'Upcoming Task Deadline',
-    message: 'KYC document upload is due in 7 days. Please complete soon.',
-    type: 'warning' as const,
-    timestamp: '2025-05-28T16:45:00Z',
-    read: true,
-    icon: AlertCircle as React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>
-  },
-  {
-    id: 4,
-    title: 'New Message from Advisor',
-    message: 'Sarah Johnson sent you a message about your investment strategy.',
-    type: 'info' as const,
-    timestamp: '2025-05-28T14:20:00Z',
-    read: true,
-    icon: User as React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>
-  },
-  {
-    id: 5,
-    title: 'Security Alert',
-    message: 'New device login detected from Chrome on Windows. Was this you?',
-    type: 'warning' as const,
-    timestamp: '2025-05-27T11:30:00Z',
-    read: false,
-    icon: Shield as React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>>
-  }
-];
+const iconMap = { Upload, FileText, Calendar, Shield, CreditCard, TrendingUp, AlertCircle, User };
 
 const statusConfig = {
   pending: { color: 'text-orange-600', bg: 'bg-orange-100', label: 'Pending' },
@@ -146,16 +42,52 @@ const notificationTypes = {
   error: { color: 'text-red-600', bg: 'bg-red-100' }
 };
 
-import type { Task, Notification } from '@/types';
-
 export default function TasksNotificationsPage() {
   const [activeTab, setActiveTab] = useState('tasks');
-  const [tasks, setTasks] = useState(tasksData);
-  const [notifications, setNotifications] = useState<Notification[]>(notificationsData);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterPriority, setFilterPriority] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showNotificationBanner, setShowNotificationBanner] = useState(true);
+
+  const { data: tasksQueryData = [], isLoading: tasksLoading, isError: tasksError } = useQuery<Task[]>({
+    queryKey: ['tasks'],
+    queryFn: async () => {
+      const res = await fetch('/api/tasks');
+      if (!res.ok) {
+        throw new Error('Failed to fetch tasks');
+      }
+      return res.json();
+    },
+  });
+
+  const { data: notificationsQueryData = [], isLoading: notifLoading, isError: notifError } = useQuery<Notification[]>({
+    queryKey: ['notifications'],
+    queryFn: async () => {
+      const res = await fetch('/api/notifications');
+      if (!res.ok) {
+        throw new Error('Failed to fetch notifications');
+      }
+      return res.json();
+    },
+  });
+
+  useEffect(() => {
+    setTasks(tasksQueryData);
+  }, [tasksQueryData]);
+
+  useEffect(() => {
+    setNotifications(notificationsQueryData);
+  }, [notificationsQueryData]);
+
+  if (tasksLoading || notifLoading) {
+    return <div className="p-4 sm:p-6 lg:p-8">Loading...</div>;
+  }
+
+  if (tasksError || notifError) {
+    return <div className="p-4 sm:p-6 lg:p-8">Error loading data.</div>;
+  }
 
   // Filter tasks
   const filteredTasks = tasks.filter(task => {
@@ -364,8 +296,8 @@ export default function TasksNotificationsPage() {
 
           {/* Tasks List */}
           <div className="space-y-4">
-            {filteredTasks.map((task) => {
-              const Icon = task.icon;
+        {filteredTasks.map((task) => {
+          const Icon = iconMap[task.icon as keyof typeof iconMap];
               const statusInfo = statusConfig[task.status as keyof typeof statusConfig];
               const priorityInfo = priorityConfig[task.priority as keyof typeof priorityConfig];
 
@@ -469,7 +401,7 @@ export default function TasksNotificationsPage() {
           {/* Notifications List */}
           <div className="space-y-2">
             {notifications.map((notification) => {
-              const Icon = notification.icon;
+              const Icon = iconMap[notification.icon as keyof typeof iconMap];
               const typeInfo = notificationTypes[notification.type];
 
               return (

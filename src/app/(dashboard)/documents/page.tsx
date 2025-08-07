@@ -21,21 +21,9 @@ import {
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
+import type { Document } from '@/types';
 
 const iconMap = { TrendingUp, Shield, Receipt, PieChart, Users, FileText };
-
-interface Document {
-  id: number;
-  name: string;
-  type: string;
-  category: string;
-  size: string;
-  date: string;
-  description: string;
-  icon: keyof typeof iconMap;
-  color: string;
-  bgColor: string;
-}
 
 const categories = ['All', 'Reports', 'Contracts', 'Invoices'];
 
