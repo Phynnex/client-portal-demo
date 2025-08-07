@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
+import {
   Waves,
   Home,
   FileText,
@@ -11,10 +11,12 @@ import {
   CheckSquare,
   ChevronLeft,
   User,
+  LogOut,
   X
 } from 'lucide-react';
 import { useClient } from '@/context/ClientContext';
 import { Button } from '@/components/ui';
+import { signOut } from 'next-auth/react';
 
 // Navigation items
 const navItems = [
@@ -125,6 +127,14 @@ export default function Sidebar({
                 <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{clientName}</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Premium Client</p>
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                aria-label="Sign out"
+              >
+                <LogOut className="h-5 w-5 text-slate-600 dark:text-slate-200" />
+              </Button>
             </div>
           </div>
         )}
