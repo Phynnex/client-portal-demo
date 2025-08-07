@@ -89,12 +89,16 @@ export default function TasksNotificationsPage() {
   });
 
   useEffect(() => {
-    setTasks(tasksQueryData);
-  }, [tasksQueryData]);
+    if (JSON.stringify(tasksQueryData) !== JSON.stringify(tasks)) {
+      setTasks(tasksQueryData);
+    }
+  }, [tasksQueryData, tasks]);
 
   useEffect(() => {
-    setNotifications(notificationsQueryData);
-  }, [notificationsQueryData]);
+    if (JSON.stringify(notificationsQueryData) !== JSON.stringify(notifications)) {
+      setNotifications(notificationsQueryData);
+    }
+  }, [notificationsQueryData, notifications]);
 
   if (tasksLoading || notifLoading) {
     return <div className="p-4 sm:p-6 lg:p-8">Loading...</div>;
