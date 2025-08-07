@@ -123,3 +123,32 @@ export interface ReportsData {
   riskMetricsData: RiskMetricRecord[];
   incomeData: IncomeRecord[];
 }
+
+export interface PortfolioPoint {
+  month: string;
+  value: number;
+  growth: number;
+}
+
+export interface AllocationItem {
+  name: string;
+  value: number;
+  color: string;
+}
+
+export interface Transaction {
+  id: number;
+  type: string;
+  asset: string;
+  amount: string;
+  date: string;
+}
+
+export interface DashboardData {
+  totalAssets: number;
+  ytdGrowth: number;
+  riskLevel: string;
+  portfolioData: PortfolioPoint[];
+  assetAllocation: AllocationItem[];
+  recentTransactions: Transaction[];
+}
