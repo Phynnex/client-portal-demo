@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
-import { Bell, User, Menu, Sun, Moon } from 'lucide-react';
+import { Bell, User, Menu, Sun, Moon, LogOut } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui';
 import { useClient } from '@/context/ClientContext';
 
@@ -59,6 +60,15 @@ export default function Navbar({
                   <span className="text-sm">Light</span>
                 </>
               )}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              onClick={() => signOut({ callbackUrl: '/' })}
+              aria-label="Sign out"
+            >
+              <LogOut className="h-5 w-5" />
             </Button>
             <div className="hidden md:flex items-center space-x-2">
               <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
