@@ -83,13 +83,13 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
   };
 
   return (
-    <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto bg-slate-50 dark:bg-slate-900">
       {/* Welcome Section */}
       <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
           Welcome back, {clientName}
         </h2>
-        <p className="text-slate-600">
+          <p className="text-slate-600 dark:text-slate-400">
           {currentTime.toLocaleDateString('en-US', { 
             weekday: 'long', 
             year: 'numeric', 
@@ -103,39 +103,39 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-slate-600 text-sm font-medium">Total Assets</p>
-              <p className="text-2xl md:text-3xl font-bold text-slate-900">{formatCurrency(totalAssets)}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Total Assets</p>
+                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">{formatCurrency(totalAssets)}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-full">
-              <DollarSign className="h-6 w-6 text-blue-600" />
+              <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                <DollarSign className="h-6 w-6 text-blue-600 dark:text-blue-300" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-slate-600 text-sm font-medium">YTD Growth</p>
-              <p className="text-2xl md:text-3xl font-bold text-green-600">+{ytdGrowth}%</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">YTD Growth</p>
+                <p className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">+{ytdGrowth}%</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-full">
-              <TrendingUp className="h-6 w-6 text-green-600" />
+              <div className="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-slate-600 text-sm font-medium">Risk Level</p>
-              <p className="text-2xl md:text-3xl font-bold text-amber-600">{riskLevel}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Risk Level</p>
+                <p className="text-2xl md:text-3xl font-bold text-amber-600 dark:text-amber-400">{riskLevel}</p>
             </div>
-            <div className="bg-amber-100 p-3 rounded-full">
-              <Shield className="h-6 w-6 text-amber-600" />
+              <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded-full">
+                <Shield className="h-6 w-6 text-amber-600 dark:text-amber-400" />
             </div>
           </div>
         </div>
@@ -144,12 +144,12 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Portfolio Performance Chart */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-slate-900">Portfolio Performance</h3>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Portfolio Performance</h3>
             <div className="flex items-center space-x-2">
-              <BarChart3 className="h-5 w-5 text-slate-500" />
-              <span className="text-sm text-slate-500">6 Months</span>
+                <BarChart3 className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+                <span className="text-sm text-slate-500 dark:text-slate-400">6 Months</span>
             </div>
           </div>
           <div className="h-64">
@@ -189,8 +189,8 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
         </div>
 
         {/* Asset Allocation */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <h3 className="text-lg font-semibold text-slate-900 mb-6">Asset Allocation</h3>
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6">Asset Allocation</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -218,8 +218,8 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: item.color }}
                 ></div>
-                <span className="text-sm text-slate-600">{item.name}</span>
-                <span className="text-sm font-medium text-slate-900">{item.value}%</span>
+                <span className="text-sm text-slate-600 dark:text-slate-400">{item.name}</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-slate-100">{item.value}%</span>
               </div>
             ))}
           </div>
@@ -227,36 +227,36 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-slate-900">Recent Transactions</h3>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Recent Transactions</h3>
           <Button variant="ghost" size="default" className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 text-sm font-medium">
             <Eye className="h-4 w-4" />
             <span>View All</span>
           </Button>
         </div>
-        <div className="space-y-4">
+          <div className="space-y-4">
           {recentTransactions.map((transaction) => (
-            <div key={transaction.id} className="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
+              <div key={transaction.id} className="flex items-center justify-between py-3 border-b border-slate-100 dark:border-slate-700 last:border-b-0">
               <div className="flex items-center space-x-4">
-                <div className={`p-2 rounded-full ${
-                  transaction.type === 'Buy' ? 'bg-green-100' : 
-                  transaction.type === 'Sell' ? 'bg-red-100' : 'bg-blue-100'
-                }`}>
-                  {transaction.type === 'Buy' ? (
-                    <TrendingUp className="h-4 w-4 text-green-600" />
-                  ) : transaction.type === 'Sell' ? (
-                    <TrendingDown className="h-4 w-4 text-red-600" />
-                  ) : (
-                    <DollarSign className="h-4 w-4 text-blue-600" />
-                  )}
-                </div>
-                <div>
-                  <p className="font-medium text-slate-900">{transaction.type} {transaction.asset}</p>
-                  <p className="text-sm text-slate-500">{transaction.date}</p>
-                </div>
+                  <div className={`p-2 rounded-full ${
+                    transaction.type === 'Buy' ? 'bg-green-100 dark:bg-green-900' :
+                    transaction.type === 'Sell' ? 'bg-red-100 dark:bg-red-900' : 'bg-blue-100 dark:bg-blue-900'
+                  }`}>
+                    {transaction.type === 'Buy' ? (
+                      <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    ) : transaction.type === 'Sell' ? (
+                      <TrendingDown className="h-4 w-4 text-red-600 dark:text-red-400" />
+                    ) : (
+                      <DollarSign className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-slate-900 dark:text-slate-100">{transaction.type} {transaction.asset}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">{transaction.date}</p>
+                  </div>
               </div>
-              <p className="font-semibold text-slate-900">{transaction.amount}</p>
+                <p className="font-semibold text-slate-900 dark:text-slate-100">{transaction.amount}</p>
             </div>
           ))}
         </div>
