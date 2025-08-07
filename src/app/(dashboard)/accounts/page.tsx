@@ -19,26 +19,9 @@ import {
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
 import { useQuery } from '@tanstack/react-query';
+import type { Account } from '@/types';
 
 const iconMap = { TrendingUp, Briefcase, Home, Banknote, Building2 };
-
-interface Account {
-  id: number;
-  name: string;
-  type: string;
-  accountNumber: string;
-  balance: number;
-  change: number;
-  changePercent: number;
-  assetTypes: string[];
-  lastUpdated: string;
-  status: string;
-  icon: keyof typeof iconMap;
-  color: string;
-  bgColor: string;
-  riskLevel: string;
-  ytdReturn: number;
-}
 
 const accountTypes = ['All', 'Investment', 'Retirement', 'Real Estate', 'Savings', 'Fixed Income'];
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { LucideProps } from 'lucide-react';
 
 export interface Task {
   id: number;
@@ -9,7 +8,7 @@ export interface Task {
   status: 'pending' | 'in-progress' | 'completed';
   dueDate: string;
   category: string;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: string;
   createdAt: string;
 }
 
@@ -20,7 +19,7 @@ export interface Notification {
   type: 'success' | 'info' | 'warning' | 'error';
   timestamp: string;
   read: boolean;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: string;
 }
 
 export interface NavItem {
@@ -29,7 +28,7 @@ export interface NavItem {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
-export interface DocumentType {
+export interface Document {
   id: number;
   name: string;
   type: string;
@@ -37,9 +36,90 @@ export interface DocumentType {
   size: string;
   date: string;
   description: string;
-  icon: React.ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>
-  >;
+  icon: string;
   color: string;
   bgColor: string;
+}
+
+export interface Account {
+  id: number;
+  name: string;
+  type: string;
+  accountNumber: string;
+  balance: number;
+  change: number;
+  changePercent: number;
+  assetTypes: string[];
+  lastUpdated: string;
+  status: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+  riskLevel: string;
+  ytdReturn: number;
+}
+
+export interface Conversation {
+  id: number;
+  name: string;
+  role: string;
+  avatar: string | null;
+  lastMessage: string;
+  timestamp: string;
+  unread: number;
+  online: boolean;
+  type: string;
+}
+
+export interface Message {
+  id: number;
+  senderId: number | string;
+  senderName: string;
+  content: string;
+  timestamp: string;
+  type: string;
+}
+
+export interface PerformanceRecord {
+  period: string;
+  portfolio: number;
+  benchmark: number;
+  growth: number;
+}
+
+export type PerformanceData = Record<string, PerformanceRecord[]>;
+
+export interface AssetAllocationRecord {
+  name: string;
+  value: number;
+  amount: number;
+  color: string;
+}
+
+export interface SectorRecord {
+  sector: string;
+  allocation: number;
+  performance: number;
+}
+
+export interface RiskMetricRecord {
+  metric: string;
+  portfolio: number;
+  benchmark: number;
+  target: number;
+}
+
+export interface IncomeRecord {
+  month: string;
+  dividends: number;
+  interest: number;
+  rent: number;
+}
+
+export interface ReportsData {
+  performanceData: PerformanceData;
+  assetAllocationData: AssetAllocationRecord[];
+  sectorData: SectorRecord[];
+  riskMetricsData: RiskMetricRecord[];
+  incomeData: IncomeRecord[];
 }
