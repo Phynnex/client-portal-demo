@@ -1,10 +1,10 @@
 
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useClient } from '@/context/ClientContext';
 import { Send, Search, MoreVertical, Phone, Video } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -13,7 +13,6 @@ import type { Conversation, Message } from '@/types';
 export default function SecureMessagingPage() {
   const { clientName } = useClient();
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
   const messageSchema = z.object({
     message: z.string().min(1, 'Message cannot be empty'),
   });
@@ -51,18 +50,21 @@ export default function SecureMessagingPage() {
     enabled: !!selectedConversation?.id,
   });
 
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     if (!selectedConversation && conversations.length > 0) {
       setSelectedConversation(conversations[0]);
     }
   }, [conversations, selectedConversation]);
 
-  useEffect(() => {
-    const convMsgs = messagesQueryData.map(m =>
-      m.senderId === 'user' ? { ...m, senderName: clientName } : m
-    );
-    setMessages(convMsgs);
-  }, [messagesQueryData, clientName]);
+  const messages = useMemo(
+    () =>
+      messagesQueryData.map(m =>
+        m.senderId === 'user' ? { ...m, senderName: clientName } : m
+      ),
+    [messagesQueryData, clientName]
+  );
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -89,7 +91,10 @@ export default function SecureMessagingPage() {
         type: 'sent',
       };
 
-      setMessages([...messages, newMsg]);
+      queryClient.setQueryData<Message[]>(
+        ['messages', selectedConversation.id],
+        (old = []) => [...old, newMsg]
+      );
 
       try {
         const res = await fetch('/api/messages', {
