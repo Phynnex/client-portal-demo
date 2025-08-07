@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -11,31 +12,34 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Button } from '@/components/ui';
 
-// Dummy data for portfolio performance
-const portfolioData = [
-  { month: 'Jan', value: 2400000, growth: 2.1 },
-  { month: 'Feb', value: 2450000, growth: 2.3 },
-  { month: 'Mar', value: 2380000, growth: -2.9 },
-  { month: 'Apr', value: 2520000, growth: 5.9 },
-  { month: 'May', value: 2680000, growth: 6.3 },
-  { month: 'Jun', value: 2750000, growth: 2.6 },
-];
+interface PortfolioPoint {
+  month: string;
+  value: number;
+  growth: number;
+}
 
-// Asset allocation data
-const assetAllocation = [
-  { name: 'Equities', value: 45, color: '#0ea5e9' },
-  { name: 'Bonds', value: 30, color: '#06b6d4' },
-  { name: 'Real Estate', value: 15, color: '#14b8a6' },
-  { name: 'Cash', value: 10, color: '#64748b' },
-];
+interface AllocationItem {
+  name: string;
+  value: number;
+  color: string;
+}
 
-// Recent transactions
-const recentTransactions = [
-  { id: 1, type: 'Buy', asset: 'AAPL', amount: '$25,000', date: '2025-05-28' },
-  { id: 2, type: 'Sell', asset: 'MSFT', amount: '$18,500', date: '2025-05-27' },
-  { id: 3, type: 'Dividend', asset: 'VOO', amount: '$2,340', date: '2025-05-26' },
-  { id: 4, type: 'Buy', asset: 'TSLA', amount: '$15,000', date: '2025-05-25' },
-];
+interface Transaction {
+  id: number;
+  type: string;
+  asset: string;
+  amount: string;
+  date: string;
+}
+
+interface DashboardData {
+  totalAssets: number;
+  ytdGrowth: number;
+  riskLevel: string;
+  portfolioData: PortfolioPoint[];
+  assetAllocation: AllocationItem[];
+  recentTransactions: Transaction[];
+}
 
 interface DashboardContentProps {
   clientName: string;
@@ -48,10 +52,26 @@ export default function DashboardContent({ clientName }: DashboardContentProps) 
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+  const { data, isLoading, isError } = useQuery<DashboardData>({
+    queryKey: ['dashboard'],
+    queryFn: async () => {
+      const res = await fetch('/api/dashboard');
+      if (!res.ok) {
+        throw new Error('Failed to fetch dashboard data');
+      }
+      return res.json();
+    },
+  });
 
-  const totalAssets = 2750000;
-  const ytdGrowth = 12.4;
-  const riskLevel = 'Moderate';
+  if (isLoading) {
+    return <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">Loading dashboard...</main>;
+  }
+
+  if (isError || !data) {
+    return <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">Error loading dashboard.</main>;
+  }
+
+  const { totalAssets, ytdGrowth, riskLevel, portfolioData, assetAllocation, recentTransactions } = data;
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
