@@ -52,7 +52,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo and Header */}
         <div className="text-center mb-8">
@@ -61,19 +61,19 @@ export default function LoginPage() {
               <Waves className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">Blue Marina</h1>
-          <p className="text-slate-600">Asset Management Portal</p>
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">Blue Marina</h1>
+          <p className="text-slate-600 dark:text-slate-400">Asset Management Portal</p>
         </div>
 
         {/* Login Form */}
         <Card className="p-8">
           <CardContent className="p-0">
-          <h2 className="text-2xl font-semibold text-slate-800 mb-6 text-center">
+          <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 mb-6 text-center">
             Welcome Back
           </h2>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:bg-red-900/30 dark:border-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-4">
               {error}
             </div>
           )}
@@ -81,7 +81,7 @@ export default function LoginPage() {
           <div className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Email Address
               </label>
               <Input
@@ -96,7 +96,7 @@ export default function LoginPage() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -114,7 +114,7 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   variant="ghost"
                   size="icon"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -130,9 +130,9 @@ export default function LoginPage() {
                   className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                   disabled={isLoading}
                 />
-                <span className="ml-2 text-sm text-slate-600">Remember me</span>
+                <span className="ml-2 text-sm text-slate-600 dark:text-slate-400">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
+              <a href="#" className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200 transition-colors">
                 Forgot password?
               </a>
             </div>
@@ -156,21 +156,21 @@ export default function LoginPage() {
           </div>
 
           {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="text-sm text-blue-800 font-medium mb-2">Demo Credentials:</p>
-            <p className="text-sm text-blue-700">Email: demo@bluemarina.com</p>
-            <p className="text-sm text-blue-700">Password: demo123</p>
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-slate-700 rounded-lg border border-blue-200 dark:border-slate-600">
+            <p className="text-sm text-blue-800 dark:text-blue-200 font-medium mb-2">Demo Credentials:</p>
+            <p className="text-sm text-blue-700 dark:text-blue-300">Email: demo@bluemarina.com</p>
+            <p className="text-sm text-blue-700 dark:text-blue-300">Password: demo123</p>
           </div>
           </CardContent>
         </Card>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-sm text-slate-500">
+        <div className="text-center mt-8 text-sm text-slate-500 dark:text-slate-400">
           <p>© 2025 Blue Marina Asset Management. All rights reserved.</p>
           <div className="mt-2 space-x-4">
-            <a href="#" className="hover:text-slate-700 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-700 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-slate-700 transition-colors">Support</a>
+            <a href="#" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">Support</a>
           </div>
         </div>
       </div>
