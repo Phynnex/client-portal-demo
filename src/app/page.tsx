@@ -5,32 +5,30 @@ import { Eye, EyeOff, Waves } from 'lucide-react';
 import { Button, Input, Card, CardContent } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email address' }),
+  password: z.string().min(1, { message: 'Please enter your password' }),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async ({ email, password }: LoginFormData) => {
     setIsLoading(true);
     setError('');
-
-    // Mock validation
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      setIsLoading(false);
-      return;
-    }
-
-    if (!email.includes('@')) {
-      setError('Please enter a valid email address');
-      setIsLoading(false);
-      return;
-    }
 
     try {
       const res = await signIn('credentials', {
@@ -78,7 +76,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="space-y-6">
+          <form onSubmit={handleSubmit(handleLogin)} className="space-y-6">
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
@@ -87,11 +85,13 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 placeholder="address"
                 disabled={isLoading}
+                {...register('email')}
               />
+              {errors.email?.message && (
+                <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.email?.message}</p>
+              )}
             </div>
 
             {/* Password Field */}
@@ -103,11 +103,10 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                   className="pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
+                  {...register('password')}
                 />
                 <Button
                   type="button"
@@ -120,6 +119,9 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </Button>
               </div>
+              {errors.password?.message && (
+                <p className="mt-2 text-sm text-red-600 dark:text-red-400">{errors.password?.message}</p>
+              )}
             </div>
 
             {/* Remember Me & Forgot Password */}
@@ -139,8 +141,7 @@ export default function LoginPage() {
 
             {/* Login Button */}
             <Button
-              type="button"
-              onClick={handleLogin}
+              type="submit"
               disabled={isLoading}
               className="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 transform hover:scale-[1.02] active:scale-[0.98]"
             >
@@ -153,7 +154,7 @@ export default function LoginPage() {
                 'Sign In'
               )}
             </Button>
-          </div>
+          </form>
 
           {/* Demo Credentials */}
           <div className="mt-6 p-4 bg-blue-50 dark:bg-slate-700 rounded-lg border border-blue-200 dark:border-slate-600">
