@@ -18,105 +18,55 @@ import {
   Briefcase
 } from 'lucide-react';
 import { Button, Input, Select } from '@/components/ui';
+import { useQuery } from '@tanstack/react-query';
 
-// Mock account data
-const accountsData = [
-  {
-    id: 1,
-    name: 'Primary Investment Portfolio',
-    type: 'Investment',
-    accountNumber: '****4521',
-    balance: 1850000,
-    change: 45000,
-    changePercent: 2.49,
-    assetTypes: ['Stocks', 'Bonds', 'ETFs'],
-    lastUpdated: '2025-05-29',
-    status: 'Active',
-    icon: TrendingUp,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100',
-    riskLevel: 'Moderate',
-    ytdReturn: 12.4
-  },
-  {
-    id: 2,
-    name: 'Retirement Savings Account',
-    type: 'Retirement',
-    accountNumber: '****8932',
-    balance: 650000,
-    change: -8500,
-    changePercent: -1.29,
-    assetTypes: ['Target Date Funds', 'Bonds'],
-    lastUpdated: '2025-05-29',
-    status: 'Active',
-    icon: Briefcase,
-    color: 'text-green-600',
-    bgColor: 'bg-green-100',
-    riskLevel: 'Conservative',
-    ytdReturn: 8.7
-  },
-  {
-    id: 3,
-    name: 'Real Estate Investment Trust',
-    type: 'Real Estate',
-    accountNumber: '****2847',
-    balance: 250000,
-    change: 12000,
-    changePercent: 5.04,
-    assetTypes: ['REITs', 'Real Estate Funds'],
-    lastUpdated: '2025-05-28',
-    status: 'Active',
-    icon: Home,
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100',
-    riskLevel: 'Moderate-High',
-    ytdReturn: 15.2
-  },
-  {
-    id: 4,
-    name: 'High-Yield Savings',
-    type: 'Savings',
-    accountNumber: '****5634',
-    balance: 75000,
-    change: 250,
-    changePercent: 0.33,
-    assetTypes: ['Cash', 'Money Market'],
-    lastUpdated: '2025-05-29',
-    status: 'Active',
-    icon: Banknote,
-    color: 'text-emerald-600',
-    bgColor: 'bg-emerald-100',
-    riskLevel: 'Low',
-    ytdReturn: 4.2
-  },
-  {
-    id: 5,
-    name: 'Corporate Bond Portfolio',
-    type: 'Fixed Income',
-    accountNumber: '****9173',
-    balance: 180000,
-    change: 3200,
-    changePercent: 1.81,
-    assetTypes: ['Corporate Bonds', 'Treasury Bills'],
-    lastUpdated: '2025-05-29',
-    status: 'Active',
-    icon: Building2,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-100',
-    riskLevel: 'Low-Moderate',
-    ytdReturn: 6.8
-  }
-];
+const iconMap = { TrendingUp, Briefcase, Home, Banknote, Building2 };
+
+interface Account {
+  id: number;
+  name: string;
+  type: string;
+  accountNumber: string;
+  balance: number;
+  change: number;
+  changePercent: number;
+  assetTypes: string[];
+  lastUpdated: string;
+  status: string;
+  icon: keyof typeof iconMap;
+  color: string;
+  bgColor: string;
+  riskLevel: string;
+  ytdReturn: number;
+}
 
 const accountTypes = ['All', 'Investment', 'Retirement', 'Real Estate', 'Savings', 'Fixed Income'];
-
-type Account = typeof accountsData[number];
 
 export default function AccountAggregationPage() {
   const [selectedType, setSelectedType] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
 
+  const { data: accountsData = [], isLoading, isError } = useQuery<Account[]>({
+    queryKey: ['accounts'],
+    queryFn: async () => {
+      const res = await fetch('/api/accounts');
+      if (!res.ok) {
+        throw new Error('Failed to fetch accounts');
+      }
+      return res.json();
+    },
+  });
+
+  if (isLoading) {
+    return <div className="p-4 sm:p-6 lg:p-8">Loading accounts...</div>;
+  }
+
+  if (isError) {
+    return <div className="p-4 sm:p-6 lg:p-8">Error loading accounts.</div>;
+  }
+
+  const SelectedIcon = selectedAccount ? iconMap[selectedAccount.icon as keyof typeof iconMap] : null;
   // Filter accounts
   const filteredAccounts = accountsData.filter(account => {
     const matchesType = selectedType === 'All' || account.type === selectedType;
@@ -242,7 +192,7 @@ export default function AccountAggregationPage() {
       {/* Accounts List */}
       <div className="space-y-4">
         {filteredAccounts.map((account) => {
-          const Icon = account.icon;
+          const Icon = iconMap[account.icon as keyof typeof iconMap];
           return (
             <div key={account.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
@@ -347,7 +297,7 @@ export default function AccountAggregationPage() {
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
                   <div className={`p-3 rounded-lg ${selectedAccount.bgColor}`}>
-                    <selectedAccount.icon className={`h-8 w-8 ${selectedAccount.color}`} />
+                    {SelectedIcon && <SelectedIcon className={`h-8 w-8 ${selectedAccount.color}`} />}
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">{selectedAccount.name}</h4>

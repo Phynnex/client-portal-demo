@@ -1,0 +1,81 @@
+import { NextResponse } from 'next/server';
+
+const documentsData = [
+  {
+    id: 1,
+    name: 'Portfolio Performance Report Q2 2025',
+    type: 'PDF',
+    category: 'Reports',
+    size: '2.4 MB',
+    date: '2025-05-28',
+    description: 'Quarterly performance analysis and market insights',
+    icon: 'TrendingUp',
+    color: 'text-blue-600',
+    bgColor: 'bg-blue-100',
+  },
+  {
+    id: 2,
+    name: 'Investment Agreement - Amendment 3',
+    type: 'PDF',
+    category: 'Contracts',
+    size: '1.8 MB',
+    date: '2025-05-25',
+    description: 'Updated terms and conditions for investment portfolio',
+    icon: 'Shield',
+    color: 'text-green-600',
+    bgColor: 'bg-green-100',
+  },
+  {
+    id: 3,
+    name: 'Monthly Invoice - May 2025',
+    type: 'PDF',
+    category: 'Invoices',
+    size: '524 KB',
+    date: '2025-05-20',
+    description: 'Management fees and transaction costs',
+    icon: 'Receipt',
+    color: 'text-orange-600',
+    bgColor: 'bg-orange-100',
+  },
+  {
+    id: 4,
+    name: 'Risk Assessment Report',
+    type: 'PDF',
+    category: 'Reports',
+    size: '3.1 MB',
+    date: '2025-05-15',
+    description: 'Comprehensive risk analysis for current holdings',
+    icon: 'PieChart',
+    color: 'text-purple-600',
+    bgColor: 'bg-purple-100',
+  },
+  {
+    id: 5,
+    name: 'Account Opening Documentation',
+    type: 'PDF',
+    category: 'Contracts',
+    size: '1.2 MB',
+    date: '2025-01-10',
+    description: 'Initial account setup and KYC documents',
+    icon: 'Users',
+    color: 'text-teal-600',
+    bgColor: 'bg-teal-100',
+  },
+  {
+    id: 6,
+    name: 'Tax Summary 2024',
+    type: 'XLSX',
+    category: 'Reports',
+    size: '890 KB',
+    date: '2025-01-31',
+    description: 'Annual tax summary for reporting purposes',
+    icon: 'FileText',
+    color: 'text-indigo-600',
+    bgColor: 'bg-indigo-100',
+  },
+];
+
+export async function GET() {
+  return NextResponse.json(documentsData);
+}
+
