@@ -45,11 +45,13 @@ export default function Sidebar({
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex flex-col bg-white border-r border-slate-200 transition-all duration-300 sticky top-0 h-screen ${
-        isCollapsed ? 'w-16' : 'w-64'
-      }`}>
+      <div
+        className={`hidden md:flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 transition-all duration-300 sticky top-0 h-screen ${
+          isCollapsed ? 'w-16' : 'w-64'
+        }`}
+      >
         {/* Sidebar Header */}
-        <div className="p-4 border-b border-slate-200">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700">
           <div className="flex items-center justify-between">
             {!isCollapsed && (
               <div className="flex items-center">
@@ -57,8 +59,8 @@ export default function Sidebar({
                   <Waves className="h-6 w-6 text-white" />
                 </div>
                 <div className="ml-3">
-                  <h1 className="text-lg font-bold text-slate-800">Blue Marina</h1>
-                  <p className="text-xs text-slate-600">Asset Management</p>
+                  <h1 className="text-lg font-bold text-slate-800 dark:text-slate-100">Blue Marina</h1>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Asset Management</p>
                 </div>
               </div>
             )}
@@ -79,7 +81,7 @@ export default function Sidebar({
                 size="icon"
                 className="p-1"
               >
-                <ChevronLeft className="h-4 w-4 text-slate-600" />
+                <ChevronLeft className="h-4 w-4 text-slate-600 dark:text-slate-200" />
               </Button>
             )}
           </div>
@@ -97,8 +99,8 @@ export default function Sidebar({
                   href={item.href}
                   className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'px-3'} py-2 rounded-lg text-left transition-colors ${
                     isActive
-                      ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-slate-700 dark:text-blue-300 dark:border-slate-600'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white'
                   }`}
                   title={isCollapsed ? item.name : ''}
                 >
@@ -114,14 +116,14 @@ export default function Sidebar({
 
         {/* User Section - Sticky to bottom */}
         {!isCollapsed && (
-          <div className="p-4 border-t border-slate-200 mt-auto flex-shrink-0">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700 mt-auto flex-shrink-0">
             <div className="flex items-center space-x-3">
-              <div className="bg-blue-100 p-2 rounded-full">
-                <User className="h-5 w-5 text-blue-600" />
+              <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
+                <User className="h-5 w-5 text-blue-600 dark:text-blue-100" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-slate-900 truncate">{clientName}</p>
-                <p className="text-xs text-slate-500">Premium Client</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">{clientName}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Premium Client</p>
               </div>
             </div>
           </div>
@@ -132,17 +134,17 @@ export default function Sidebar({
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}></div>
-          <div className="mobile-sidebar fixed left-0 top-0 h-full w-64 bg-white shadow-xl">
+          <div className="mobile-sidebar fixed left-0 top-0 h-full w-64 bg-white dark:bg-slate-900 shadow-xl">
             {/* Mobile Header */}
-            <div className="p-4 border-b border-slate-200">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-2 rounded-lg">
                     <Waves className="h-6 w-6 text-white" />
                   </div>
                   <div className="ml-3">
-                    <h1 className="text-lg font-bold text-slate-800">Blue Marina</h1>
-                    <p className="text-xs text-slate-600">Asset Management</p>
+                    <h1 className="text-lg font-bold text-slate-800 dark:text-slate-100">Blue Marina</h1>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Asset Management</p>
                   </div>
                 </div>
                 <Button
@@ -151,7 +153,7 @@ export default function Sidebar({
                   size="icon"
                   className="p-2"
                 >
-                  <X className="h-5 w-5 text-slate-600" />
+                  <X className="h-5 w-5 text-slate-600 dark:text-slate-200" />
                 </Button>
               </div>
             </div>
@@ -169,8 +171,8 @@ export default function Sidebar({
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
                         isActive
-                          ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                          ? 'bg-blue-50 text-blue-600 border border-blue-200 dark:bg-slate-700 dark:text-blue-300 dark:border-slate-600'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white'
                       }`}
                     >
                       <Icon className="h-5 w-5 shrink-0" />

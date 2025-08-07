@@ -18,7 +18,7 @@ export default function Navbar({
   const { theme, setTheme } = useTheme();
   const isDark = theme === 'dark';
   return (
-    <header className="bg-white shadow-sm border-b border-slate-200">
+    <header className="bg-white dark:bg-slate-900 shadow-sm border-b border-slate-200 dark:border-slate-700">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Mobile Menu Button */}
@@ -28,23 +28,23 @@ export default function Navbar({
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(true)}
           >
-            <Menu className="h-5 w-5 text-slate-600" />
+            <Menu className="h-5 w-5 text-slate-600 dark:text-slate-200" />
           </Button>
 
           {/* Page Title */}
           <div className="flex-1 md:flex-none">
-            <h1 className="text-xl font-semibold text-slate-900">{pageTitle}</h1>
+            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{pageTitle}</h1>
           </div>
 
           {/* Header Actions */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="relative text-slate-600 hover:text-slate-900">
+            <Button variant="ghost" size="icon" className="relative text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
             </Button>
             <Button
               variant="ghost"
-              className="flex items-center space-x-1 text-slate-600 hover:text-slate-900"
+              className="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
               onClick={() => setTheme(isDark ? 'light' : 'dark')}
               aria-label="Toggle theme"
             >
@@ -61,10 +61,10 @@ export default function Navbar({
               )}
             </Button>
             <div className="hidden md:flex items-center space-x-2">
-              <div className="bg-blue-100 p-2 rounded-full">
-                <User className="h-5 w-5 text-blue-600" />
+              <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
+                <User className="h-5 w-5 text-blue-600 dark:text-blue-100" />
               </div>
-              <span className="text-sm font-medium text-slate-700">{clientName}</span>
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{clientName}</span>
             </div>
           </div>
         </div>
