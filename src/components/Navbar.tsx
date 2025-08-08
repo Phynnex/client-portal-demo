@@ -45,18 +45,18 @@ export default function Navbar({
             </Button>
             <Button
               variant="ghost"
-              className="flex items-center space-x-1 text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+              className="flex items-center space-x-1 text-slate-600 dark:text-slate-300  focus:outline-none"
               onClick={() => setTheme(isDark ? 'light' : 'dark')}
               aria-label="Toggle theme"
             >
               {isDark ? (
                 <>
-                  <Moon className="h-5 w-5" />
+                  <Moon className="h-5 w-5 " />
                   <span className="text-sm">Dark</span>
                 </>
               ) : (
                 <>
-                  <Sun className="h-5 w-5" />
+                  <Sun className="h-5 w-5  " />
                   <span className="text-sm">Light</span>
                 </>
               )}
@@ -68,13 +68,13 @@ export default function Navbar({
               onClick={() => signOut({ callbackUrl: '/' })}
               aria-label="Sign out"
             >
-              <LogOut className="h-5 w-5" />
             </Button>
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-4">
               <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-full">
-                <User className="h-5 w-5 text-blue-600 dark:text-blue-100" />
+                <User className="h-5 w-5 text-blue-600 " />
               </div>
               <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{clientName}</span>
+              <LogOut className="h-5 w-5 dark:text-light" />
             </div>
           </div>
         </div>
